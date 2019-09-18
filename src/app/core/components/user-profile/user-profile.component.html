@@ -1,0 +1,20 @@
+<div class="profile" fxLayout="column">
+    <div class="header" fxLayout="column" fxLayoutAlign="center center">
+        <div class="username">{{username}}</div>
+        <div class="container-row" fxLayout="row">
+            <avatar [size]="'medium'"></avatar>
+            <div class="stat-container" fxLayout="column">
+                <span>{{numPosts}}</span>
+                <span>Posts</span>
+            </div>
+            <div class="stat-container" fxLayout="column">
+                <span>{{numFollowers}}</span>
+                <span>Posts</span>
+            </div>
+            <div class="stat-container" fxLayout="column">
+                <span>{{numFollowees}}</span>
+                <span>Posts</span>
+            </div>
+        </div>
+    </div>
+</div>

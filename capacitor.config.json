@@ -1,0 +1,7 @@
+{
+  "appId": "com.becksteadDev.instagram",
+  "appName": "Instagram",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "dist/twitter"
+}

@@ -1,0 +1,17 @@
+import { Component, OnInit, Input } from '@angular/core';
+
+@Component({
+  selector: 'avatar',
+  templateUrl: './avatar.component.html',
+  styleUrls: ['./avatar.component.less']
+})
+export class AvatarComponent implements OnInit {
+  @Input() size = "medium";
+  @Input() photoUrl = "../../../../assets/icons/user.svg";
+
+  constructor() { }
+
+  ngOnInit() {
+  }
+
+}
