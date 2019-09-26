@@ -1,0 +1,11 @@
+<div class="row" fxLayout="row" fxLayoutAlign="start center">
+    <div class="left-side" fxLayoutAlign="start center">
+        <avatar size="small"></avatar>
+        <div class="name-row" fxLayout="column">
+            <div class="handle">{{handle}}</div>
+            <div class="user-name">{{name}}</div>
+        </div>
+    </div>
+    <button *ngIf="!following" class="follow-button" mat-flat-button color="primary">Follow</button>
+    <button *ngIf="following" class="follow-button" mat-stroked-button color="white">Following</button>
+</div>

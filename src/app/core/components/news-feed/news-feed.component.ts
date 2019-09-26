@@ -1,4 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { Plugins, CameraResultType } from '@capacitor/core';
+
+const { Camera } = Plugins;
 
 @Component({
   selector: 'News-Feed',
@@ -14,12 +17,15 @@ export class NewsFeedComponent implements OnInit {
 
   constructor() { }
 
-  ngOnInit() {
-    console.log(this.params)
-  }
+  ngOnInit() { }
 
-  testFunction() {
-    console.log('hello world')
+  async takePicture() {
+    const image = await Camera.getPhoto({
+      quality: 90,
+      allowEditing: true,
+      resultType: CameraResultType.Uri
+    });
+    let imageUrl = image.webPath;
   }
 
 }

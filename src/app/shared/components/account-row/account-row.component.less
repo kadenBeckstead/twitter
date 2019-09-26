@@ -1,0 +1,31 @@
+@import '../../../../variables.less';
+
+.row {
+    width: 100%;
+    padding: 0.5rem;
+    .left-side {
+        width: 65vw;
+        height: 100%;
+        .name-row {
+            width: 75%;
+            margin-left: 0.5rem;
+            .handle {
+                width: 100%;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+            .user-name {
+                width: 100%;
+                color: @sub-text;
+                white-space: nowrap;
+                overflow: hidden;
+                text-overflow: ellipsis;
+            }
+        }
+    }
+    .follow-button {
+        width: 35vw;
+        height: 75%;
+    }
+}

@@ -5,7 +5,8 @@ import {
 	AddStoryComponent,
 	NotificationsComponent,
 	UserProfileComponent,
-	AppMenuComponent
+	AppMenuComponent,
+	FollowListComponent
 } from './core';
 
 export const routes: Routes = [
@@ -16,6 +17,7 @@ export const routes: Routes = [
 		{ path: 'add', component: AddStoryComponent },
 		{ path: 'notifications', component: NotificationsComponent },
 		{ path: 'profile', component: UserProfileComponent },
+		{ path: 'follow', component: FollowListComponent },
   ]},
   
   // { path: 'login', component: LoginComponent },

@@ -10,6 +10,7 @@ import {
 	NotificationsComponent,
 	UserProfileComponent,
 	AppMenuComponent,
+	FollowListComponent,
  } from './components';
 
 
@@ -25,6 +26,7 @@ const components = [
 	NotificationsComponent,
 	UserProfileComponent,
 	AppMenuComponent,
+	FollowListComponent,
 ];
 
 const directives = [];

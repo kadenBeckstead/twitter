@@ -1,16 +1,16 @@
 @import '../../../../variables.less';
 
 .app-display {
-    width: 100vw;
-    height: 100vh;
-    overflow: hidden;
+    width: 99vw;
+    height: 99vh;
+    overflow-x: hidden !important;
 
     .menu {
         width: 100%;
         position: absolute;
         bottom: 0;
         background: lightgray; // TODO: delete this
-        height: 10vh;
+        height: 8vh;
 
         .menu-icons {
             width: 100%;
@@ -18,7 +18,7 @@
 
             .icon {
                 color: @icon-default;
-                width: 12%;
+                width: 10%;
                 height: auto;
             }
         }

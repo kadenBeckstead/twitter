@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { FeatureFlagsService } from 'src/app/shared/services';
+import { FeatureFlagsService, DummyDataService } from 'src/app/shared/services';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,16 +10,24 @@ import { FeatureFlagsService } from 'src/app/shared/services';
 export class UserProfileComponent implements OnInit {
 
   params;
-  username = "Kaden Beckstead";
-  numPosts = 10;
-  numFollowers = 300;
-  numFollowees = 143;
+  ff;
   
   constructor(
-    private featureFlags: FeatureFlagsService,
-  ) { }
+    private ffs: FeatureFlagsService,
+    private router: Router,
+  ) { 
+    this.ff = this.ffs.ff;
+  }
 
   ngOnInit() {
-    this.params = this.featureFlags['profile'] || [];
+    this.params = this.ffs['profile'] || [];
+  }
+
+  showFollowers() {
+    this.router.navigate(['/follow'], {queryParams: {tab: 'followers'}});
+  }
+
+  showFollowing() {
+    this.router.navigate(['/follow'], {queryParams: {tab: 'following'}});
   }
 }

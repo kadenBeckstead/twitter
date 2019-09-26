@@ -42,11 +42,14 @@ import { OverlayModule } from '@angular/cdk/overlay';
 
 import {
 	AvatarComponent,
+	BackHeaderComponent,
+	AccountRowComponent,
 } from './components';
 
 import { 
 	DummyDataService,
 	FeatureFlagsService,
+	RealDataService,
  } from './services';
 
 // import { } from './directives';
@@ -55,6 +58,8 @@ import {
 
 const components = [
 	AvatarComponent,
+	BackHeaderComponent,
+	AccountRowComponent,
 ];
 
 const directives = [];
@@ -66,6 +71,7 @@ const pipes = [];
 const services = [
 	DummyDataService,
 	FeatureFlagsService,
+	RealDataService,
 ];
 
 const modulesToExport = [
