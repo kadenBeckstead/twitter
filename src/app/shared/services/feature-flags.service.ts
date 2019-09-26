@@ -1,4 +1,6 @@
 import { Injectable } from '@angular/core';
+import { RealDataService } from './real-data.service';
+import { DummyDataService } from './dummy-data.service';
 
 @Injectable({
   providedIn: 'root'
@@ -6,13 +8,24 @@ import { Injectable } from '@angular/core';
 export class FeatureFlagsService {
 
   ff = {
-    feed: { data: false, display: true },
-    search: { data: false, display: true },
-    add: { data: false, display: true },
-    notifications: { data: false, display: true },
-    profile: { data: false, display: true },
+    feed:          { data: false, display: true, name: 'feed' },
+    search:        { data: false, display: true, name: 'search' },
+    add:           { data: false, display: true, name: 'add' },
+    notifications: { data: false, display: true, name: 'notifications' },
+    profile:       { data: false, display: true, name: 'profile' },
   };
 
-  constructor() { }
+  constructor(
+    private real: RealDataService,
+    private dummy: DummyDataService,
+  ) { 
+    Object.values(this.ff).forEach((flag: any) => {
+      if (flag.data) {
+        flag.service = this.real;
+      } else {
+        flag.service = this.dummy;
+      }
+    })
+  }
 
 }
