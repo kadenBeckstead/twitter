@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FeatureFlagsService, DummyDataService } from 'src/app/shared/services';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,25 +8,26 @@ import { Router } from '@angular/router';
 })
 export class UserProfileComponent implements OnInit {
 
-  params;
-  ff;
+  user: any;
   
   constructor(
-    private ffs: FeatureFlagsService,
     private router: Router,
-  ) { 
-    this.ff = this.ffs.ff;
-  }
+    private route: ActivatedRoute,
+  ) {}
 
   ngOnInit() {
-    this.params = this.ffs['profile'] || [];
+    this.user = this.route.snapshot.queryParams;
   }
 
   showFollowers() {
-    this.router.navigate(['/follow'], {queryParams: {tab: 'followers'}});
+    this.router.navigate(['/follow'], {queryParams: {tab: 'followers', id: this.user.id}});
   }
 
   showFollowing() {
-    this.router.navigate(['/follow'], {queryParams: {tab: 'following'}});
+    this.router.navigate(['/follow'], {queryParams: {tab: 'following', id: this.user.id}});
+  }
+
+  goBack() {
+    window.history.back();
   }
 }

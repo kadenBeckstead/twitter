@@ -1,7 +1,9 @@
 <div class="app-display" fxLayout="column">
     <News-Feed *ngIf="selectedRoute==='feed'" [params]="ffs.ff[selectedRoute] || []"></News-Feed>
-    <router-outlet *ngIf="selectedRoute!=='feed'"></router-outlet>
-    <div class="menu">
+    <div class="content">
+        <router-outlet *ngIf="selectedRoute!=='feed'"></router-outlet>
+    </div>
+    <div class="menu" *ngIf="settings.showNavBar">
         <span class="menu-icons" fxLayoutAlign="space-around center">
             <ng-container *ngFor="let icon of menuIcons">
                 <mat-icon class="icon" [svgIcon]="selectedIcon === icon.title ? icon.active : icon.title"

@@ -38,6 +38,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { OverlayModule } from '@angular/cdk/overlay';
+import { ClickOutsideModule } from 'ng-click-outside';
 
 
 import {
@@ -50,6 +51,7 @@ import {
 	DummyDataService,
 	FeatureFlagsService,
 	RealDataService,
+	LocalSettingsService,
  } from './services';
 
 // import { } from './directives';
@@ -72,6 +74,7 @@ const services = [
 	DummyDataService,
 	FeatureFlagsService,
 	RealDataService,
+	LocalSettingsService,
 ];
 
 const modulesToExport = [
@@ -112,6 +115,7 @@ const modulesToExport = [
 	BrowserModule,
 	BrowserAnimationsModule,
 	OverlayModule,
+	ClickOutsideModule,
 ]
 
 const modules = [

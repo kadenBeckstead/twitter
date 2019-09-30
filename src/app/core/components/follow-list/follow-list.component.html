@@ -1,12 +1,12 @@
-<back-header [title]="ff.profile.service.handle">
+<back-header [title]="currentProfile.handle">
     <mat-tab-group mat-stretch-tabs [disableRipple]="true" [selectedIndex]="tabIsFollowing ? 1 : 0">
-        <mat-tab [label]="ff.profile.service.numFollowers + ' Followers'">
-            <account-row [handle]="user.handle" [name]="user.username" [following]="user.following"
-                *ngFor="let user of ff.profile.service.followers"></account-row>
+        <mat-tab [label]="followers.length + ' Followers'">
+        <account-row [handle]="user.handle" [id]="user.id" [name]="user.username" [following]="ff.profile.service.isAFollower(user.id, userId)"
+                *ngFor="let user of followers"></account-row>
         </mat-tab>
-        <mat-tab [label]="ff.profile.service.numFollowing + ' Following'">
-            <account-row [handle]="user.handle" [name]="user.username" [following]="user.following"
-                *ngFor="let user of ff.profile.service.following"></account-row>
+        <mat-tab [label]="following.length + ' Following'">
+            <account-row [handle]="user.handle" [id]="user.id" [name]="user.username" [following]="ff.profile.service.isAFollower(user.id, userId)"
+                *ngFor="let user of following"></account-row>
         </mat-tab>
     </mat-tab-group>
 </back-header>

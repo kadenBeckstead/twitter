@@ -11,7 +11,7 @@ export class FeatureFlagsService {
     feed:          { data: false, display: true, name: 'feed' },
     search:        { data: false, display: true, name: 'search' },
     add:           { data: false, display: true, name: 'add' },
-    notifications: { data: false, display: true, name: 'notifications' },
+    notifications: { data: false, display: false, name: 'notifications' }, // TODO: Is this necessary
     profile:       { data: false, display: true, name: 'profile' },
   };
 
