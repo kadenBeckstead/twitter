@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
+import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/services';
 
 @Component({
   selector: 'app-user-profile',
@@ -9,14 +10,22 @@ import { Router, ActivatedRoute } from '@angular/router';
 export class UserProfileComponent implements OnInit {
 
   user: any;
+  ff;
   
   constructor(
     private router: Router,
     private route: ActivatedRoute,
-  ) {}
+    private ffs: FeatureFlagsService,
+    private settings: LocalSettingsService
+  ) {
+    this.ff = ffs.ff.profile;
+  }
 
   ngOnInit() {
-    this.user = this.route.snapshot.queryParams;
+    // this.user = this.route.snapshot.queryParams;
+    this.route.queryParams.subscribe((a) => {
+      this.user = a;
+    })
   }
 
   showFollowers() {
@@ -29,5 +38,13 @@ export class UserProfileComponent implements OnInit {
 
   goBack() {
     window.history.back();
+  }
+
+  goToFeed() {
+    this.settings.changeRoute({
+      title: 'home_outline',
+      route: 'feed',
+      params: {}
+    })
   }
 }

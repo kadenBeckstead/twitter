@@ -9,8 +9,6 @@ import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/servic
 })
 export class AppMenuComponent implements OnInit {
 
-  selectedRoute = 'feed';
-  selectedIcon = 'home_outline';
   ff;
 
   menuIcons = [];
@@ -35,10 +33,10 @@ export class AppMenuComponent implements OnInit {
 
 
 
-  changeRoute(icon) {
-    this.selectedIcon = icon.title;
-    this.selectedRoute = icon.route;
-    this.router.navigate([icon.route], {queryParams: {...icon.params}})
-  }
+  // changeRoute(icon) {
+  //   this.selectedIcon = icon.title;
+  //   this.selectedRoute = icon.route;
+  //   this.router.navigate([icon.route], {queryParams: {...icon.params}})
+  // }
 
 }

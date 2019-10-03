@@ -1,19 +1,39 @@
 @import '../../../../variables.less';
 
 
-.header {
-    height: 3rem;
-    width: 100%;
-}
+.container {
+    height: 92vh;
+    top: 0;
+    .header {
+        height: 3rem;
+        width: 100%;
+        background: white;
+        z-index: 1;
+    }
 
-.camera {
-    position: absolute;
-    padding-top: 0.5rem; 
-    left: 1rem;
-    width: 2rem;
-    height: auto;
-}
+    .sticky {
+        position: -webkit-sticky !important; 
+        position: sticky !important; 
+        top: 0px;
+    }
 
-.logo {
-    z-index: 1;
+    .camera {
+        position: absolute;
+        padding-top: 0.5rem; 
+        left: 1rem;
+        width: 2rem;
+        height: auto;
+        z-index: 2;
+    }
+
+    .logo {
+        z-index: 1;
+    }
+
+    .posts {
+        height: 100%;
+        overflow: auto;
+        -webkit-overflow-scrolling: touch;
+        padding: 1vh 0vw 2vh 0vw;
+    }
 }

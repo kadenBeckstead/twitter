@@ -28,7 +28,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.params = this.featureFlags['search'] || [];
-    if (Keyboard) {
+    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
       Keyboard.setAccessoryBarVisible({isVisible: false});
     }
   }

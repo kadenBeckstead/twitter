@@ -1,13 +1,13 @@
-<div class="app-display" fxLayout="column">
-    <News-Feed *ngIf="selectedRoute==='feed'" [params]="ffs.ff[selectedRoute] || []"></News-Feed>
-    <div class="content">
-        <router-outlet *ngIf="selectedRoute!=='feed'"></router-outlet>
+<div class="noscroll app-display" fxLayout="column">
+    <News-Feed *ngIf="settings.selectedRoute==='feed'" [params]="ffs.ff[settings.selectedRoute] || []"></News-Feed>
+    <div class="content noscroll">
+        <router-outlet class="noscroll" *ngIf="settings.selectedRoute!=='feed'"></router-outlet>
     </div>
-    <div class="menu" *ngIf="settings.showNavBar">
+    <div class="footer noscroll" *ngIf="settings.showNavBar">
         <span class="menu-icons" fxLayoutAlign="space-around center">
             <ng-container *ngFor="let icon of menuIcons">
-                <mat-icon class="icon" [svgIcon]="selectedIcon === icon.title ? icon.active : icon.title"
-                    (click)="changeRoute(icon)" *ngIf="ffs.ff[icon.route].display"></mat-icon>
+                <mat-icon class="icon" [svgIcon]="settings.selectedIcon === icon.title ? icon.active : icon.title"
+                    (click)="settings.changeRoute(icon)" *ngIf="ffs.ff[icon.route].display"></mat-icon>
             </ng-container>
         </span>
     </div>

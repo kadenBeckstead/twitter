@@ -1,6 +1,7 @@
 <div class="profile" fxLayout="column">
     <div class="header" fxLayout="column" fxLayoutAlign="center center">
         <mat-icon *ngIf="user.back" [svgIcon]="'chevron-left'" class="back-icon" (click)="goBack()"></mat-icon>
+        <mat-icon *ngIf="user.backToFeed" [svgIcon]="'chevron-left'" class="back-icon" (click)="goToFeed()"></mat-icon>
         <div class="username">{{user.username}}</div>
         <div class="container-row" fxLayout="row" fxLayoutAlign="space-between center">
             <avatar class="avatar" size="medium"></avatar>
@@ -19,4 +20,7 @@
         </div>
     </div>
     <mat-divider class="divider"></mat-divider>
+    <posts-list class="posts" [posts]="ff.service.users[user.id].posts"></posts-list>
 </div>
+<!-- <div class="content"> -->
+<!-- </div> -->

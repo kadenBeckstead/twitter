@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Plugins, CameraResultType } from '@capacitor/core';
+import { FeatureFlagsService } from 'src/app/shared/services';
 
 const { Camera } = Plugins;
 
@@ -14,8 +15,13 @@ export class NewsFeedComponent implements OnInit {
   username: string;
   password: string;
   submitted: boolean = false;
+  ff;
 
-  constructor() { }
+  constructor(
+    private ffs: FeatureFlagsService
+  ) {
+    this.ff = ffs.ff.feed;
+   }
 
   ngOnInit() { }
 

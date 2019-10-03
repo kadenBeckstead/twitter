@@ -45,6 +45,9 @@ import {
 	AvatarComponent,
 	BackHeaderComponent,
 	AccountRowComponent,
+	PostComponent,
+	PostsListComponent,
+	ClickableStringComponent,
 } from './components';
 
 import { 
@@ -52,29 +55,39 @@ import {
 	FeatureFlagsService,
 	RealDataService,
 	LocalSettingsService,
+	FormatterService,
  } from './services';
 
+import { 
+	EscapeHtmlPipe,
+ } from './pipes';
+
 // import { } from './directives';
-// import { } from './pipes';
 
 
 const components = [
 	AvatarComponent,
 	BackHeaderComponent,
 	AccountRowComponent,
+	PostComponent,
+	PostsListComponent,
+	ClickableStringComponent,
 ];
 
 const directives = [];
 
 const modals = [];
 
-const pipes = [];
+const pipes = [
+	EscapeHtmlPipe
+];
 
 const services = [
 	DummyDataService,
 	FeatureFlagsService,
 	RealDataService,
 	LocalSettingsService,
+	FormatterService,
 ];
 
 const modulesToExport = [
