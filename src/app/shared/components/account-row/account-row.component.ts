@@ -31,4 +31,8 @@ export class AccountRowComponent implements OnInit {
     this.router.navigate(['profile'], {queryParams: {...this.ff.profile.service.getSingleUser(this.id), back: true}})
   }
 
+  toggleFollow() {
+    this.following = !this.following; // TODO: implement with db
+  }
+
 }

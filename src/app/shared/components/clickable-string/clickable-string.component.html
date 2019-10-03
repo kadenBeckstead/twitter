@@ -1,0 +1,3 @@
+<div class="fitted-string" fxLayout="row wrap" fxLayoutGap="0.25rem">
+    <span class="formatted-string" [class.bold]="word.clickable" *ngFor="let word of formattedString" (click)="word.clickable && word.clickFn(word.word)">{{word.word}}</span>
+</div>
