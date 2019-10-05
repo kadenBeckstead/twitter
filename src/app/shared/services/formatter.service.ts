@@ -24,25 +24,6 @@ export class FormatterService {
     return new Date(timestamp * 1000);
   }
 
-  formatPostBody(str: string, id: string) {
-    str.split(' ').forEach((w) => {
-      let newString = '';
-      if (w.startsWith('#')) {
-        let startIndex = str.match(w).index;
-        let endIndex = startIndex + w.length; //[routerLink]="['/profile']" [queryParams]="{...this.ff.profile.service.getSingleUser(id), 'back': true}}"
-        newString = str.substr(0, startIndex) + `<a (click)="testFunction()"><b>`+ str.substr(startIndex, w.length) + '</b></a>' + str.substr(endIndex, str.length)
-        str = newString;
-      }
-      if (w.startsWith('@')) {
-        let startIndex = str.match(w).index;
-        let endIndex = startIndex + w.length;
-        newString = str.substr(0, startIndex) + '<b>'+ str.substr(startIndex, w.length) + '</b>' + str.substr(endIndex, str.length)
-        str = newString;
-      }
-    })
-    return str;
-  }
-
   formatString(string, length) {
     return [string.length > length ? string.substring(0, length) + "..." : string, string] // [formatted string, original string]
   }

@@ -1,4 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'avatar',
@@ -7,9 +8,13 @@ import { Component, OnInit, Input } from '@angular/core';
 })
 export class AvatarComponent implements OnInit {
   @Input() size = "medium";
-  @Input() photoUrl = "../../../../assets/icons/user.svg";
+  @Input() photoUrl = null;
 
-  constructor() { }
+  defaultUrl = '../../../../assets/icons/user.svg';
+
+  constructor(
+    public sanitizer: DomSanitizer,
+  ) { }
 
   ngOnInit() {
   }

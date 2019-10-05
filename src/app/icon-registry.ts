@@ -13,4 +13,5 @@ export let icons = [
     { title: 'user_outline', path: base_path + 'outline-user.svg' },
     { title: 'camera', path: base_path + 'camera.svg' },
     { title: 'chevron-left', path: base_path + 'chevron-left.svg' },
+    { title: 'add-photo', path: base_path + 'add-photo.svg' },
 ]

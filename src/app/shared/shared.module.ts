@@ -48,6 +48,9 @@ import {
 	PostComponent,
 	PostsListComponent,
 	ClickableStringComponent,
+	HashtagMatchComponent,
+	BottomSheetComponent,
+	PostViewerComponent,
 } from './components';
 
 import { 
@@ -72,11 +75,15 @@ const components = [
 	PostComponent,
 	PostsListComponent,
 	ClickableStringComponent,
+	HashtagMatchComponent,
+	PostViewerComponent,
 ];
 
 const directives = [];
 
-const modals = [];
+const modals = [
+	BottomSheetComponent,
+];
 
 const pipes = [
 	EscapeHtmlPipe

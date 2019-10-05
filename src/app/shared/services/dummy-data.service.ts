@@ -104,7 +104,7 @@ export class DummyDataService {
     while ((match = regex.exec(inputText))) {
       matches.push(match[1]);
     }
-
+    matches.sort((a, b) => (a.timestamp > b.timestamp) ? 1 : -1)
     return matches;
   }
 

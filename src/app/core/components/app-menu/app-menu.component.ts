@@ -23,20 +23,12 @@ export class AppMenuComponent implements OnInit {
 
   ngOnInit() {
     this.menuIcons = [ 
-      {title: 'home_outline', active: 'home', route: 'feed'},
-      {title: 'search', active: 'search', route: 'search'},
-      {title: 'add_outline', active: 'add', route: 'add'},
-      {title: 'favorite_outline', active: 'favorite', route: 'notifications'},
-      {title: 'user_outline', active: 'user', route: 'profile', params: this.ff.profile.service.base_user},
+      {title: 'home_outline', active: 'home', route: 'app/feed', featureFlag: 'feed'},
+      {title: 'search', active: 'search', route: 'app/search', featureFlag: 'search'},
+      {title: 'add_outline', active: 'add', route: 'app/add', featureFlag: 'add'},
+      {title: 'favorite_outline', active: 'favorite', route: 'app/notifications', featureFlag: 'notifications'},
+      {title: 'user_outline', active: 'user', route: 'app/profile', params: this.ff.profile.service.base_user, featureFlag: 'profile'},
     ];
   }
-
-
-
-  // changeRoute(icon) {
-  //   this.selectedIcon = icon.title;
-  //   this.selectedRoute = icon.route;
-  //   this.router.navigate([icon.route], {queryParams: {...icon.params}})
-  // }
 
 }

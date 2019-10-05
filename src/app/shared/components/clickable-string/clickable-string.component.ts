@@ -49,7 +49,11 @@ export class ClickableStringComponent implements OnInit {
 
   hashtag(word: string) {
     let hashtag = word.slice(1,word.length);
-    console.log(this.ff.service.getStatusesByHashtag(hashtag));
+    this.settings.changeRoute({
+      title: null,
+      route: 'app/hashtag-match',
+      params: {hash: hashtag}
+    })
   }
 
   mention(word: string) {
@@ -58,7 +62,7 @@ export class ClickableStringComponent implements OnInit {
 
     this.settings.changeRoute({
       title: 'user_outline',
-      route: 'profile',
+      route: 'app/profile',
       params: {...mentionedUser, back: true}
     })
 

@@ -1,1 +1,18 @@
-<p>add-story works!</p>
+<div class="add-story" fxLayout="column" fxLayoutAlign="center center">
+    <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="passwordInput.focus()">
+        <input #passwordInput (keydown)="focus($event.keyCode)" fxFlex="100%" class="searchBox" placeholder="Title"
+            autocomplete="off" spellcheck="false" [(ngModel)]="title">
+    </div>
+    <button (click)="getAttachment()" mat-flat-button class="attachment" fxLayoutAlign="center center">
+        <span>Add an attachment?</span>
+        <mat-icon [svgIcon]="'add-photo'" class="photo-icon"></mat-icon>
+    </button>
+    <mat-form-field class="form-field">
+        <textarea id="textarea" [cdkAutosizeMinRows]="5" [cdkTextareaAutosize]="true" matInput
+            placeholder="What's on your mind..." [(ngModel)]="status"></textarea>
+    </mat-form-field>
+
+    <button mat-flat-button class="send attachment" fxLayoutAlign="center center">
+        <span>Send</span>
+    </button>
+</div>

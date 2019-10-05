@@ -1,0 +1,5 @@
+<back-header [title]="post?.title || null">
+    <div class="post-container" fxLayoutAlign="center center">
+        <post class="post" *ngIf="post" [isViewer]="true" [post]="post"></post>
+    </div>
+</back-header>

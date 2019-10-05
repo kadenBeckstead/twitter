@@ -28,7 +28,7 @@ export class AccountRowComponent implements OnInit {
   }
 
   openUserProfile() {
-    this.router.navigate(['profile'], {queryParams: {...this.ff.profile.service.getSingleUser(this.id), back: true}})
+    this.router.navigate(['app/profile'], {queryParams: {...this.ff.profile.service.getSingleUser(this.id), back: true}})
   }
 
   toggleFollow() {

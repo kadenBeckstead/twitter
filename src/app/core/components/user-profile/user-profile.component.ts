@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/services';
+import { MatBottomSheet } from '@angular/material/bottom-sheet';
+import { BottomSheetComponent } from '../../../shared/components'
 
 @Component({
   selector: 'app-user-profile',
@@ -16,7 +18,8 @@ export class UserProfileComponent implements OnInit {
     private router: Router,
     private route: ActivatedRoute,
     private ffs: FeatureFlagsService,
-    private settings: LocalSettingsService
+    private settings: LocalSettingsService,
+    private _bottomSheet: MatBottomSheet
   ) {
     this.ff = ffs.ff.profile;
   }
@@ -29,11 +32,11 @@ export class UserProfileComponent implements OnInit {
   }
 
   showFollowers() {
-    this.router.navigate(['/follow'], {queryParams: {tab: 'followers', id: this.user.id}});
+    this.router.navigate(['app/follow'], {queryParams: {tab: 'followers', id: this.user.id}});
   }
 
   showFollowing() {
-    this.router.navigate(['/follow'], {queryParams: {tab: 'following', id: this.user.id}});
+    this.router.navigate(['app/follow'], {queryParams: {tab: 'following', id: this.user.id}});
   }
 
   goBack() {
@@ -43,8 +46,15 @@ export class UserProfileComponent implements OnInit {
   goToFeed() {
     this.settings.changeRoute({
       title: 'home_outline',
-      route: 'feed',
+      route: 'app/feed',
       params: {}
+    })
+  }
+
+  openSettingsSheet() {
+    this._bottomSheet.open(BottomSheetComponent, {
+      closeOnNavigation: true,
+      hasBackdrop: true
     })
   }
 }

@@ -11,6 +11,7 @@ import {
 	UserProfileComponent,
 	AppMenuComponent,
 	FollowListComponent,
+	LoginComponent,
  } from './components';
 
 
@@ -27,6 +28,7 @@ const components = [
 	UserProfileComponent,
 	AppMenuComponent,
 	FollowListComponent,
+	LoginComponent,
 ];
 
 const directives = [];

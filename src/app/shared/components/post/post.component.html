@@ -1,11 +1,12 @@
-<div class="post" fxLayout="column" fxLayoutAlign="center center">
-    <div class="header" fxLayout="row" fxLayoutAlign="start center" (click)="routeToProfile()">
-        <avatar [size]="'x-small'" [photoUrl]="post.photoUrl"></avatar>
+<div class="post" [class.viewer]="isViewer" fxLayout="column" fxLayoutAlign="center center">
+    <div class="header" fxLayout="row" fxLayoutAlign="start center" (click)="handleClick($event)">
+        <span fxLayout="row" fxLayoutAlign="start center">
+        <avatar class="avatar" [size]="'x-small'" [photoUrl]="post.photoUrl"></avatar>
         <div class="username">{{username}}</div>
+    </span>
     </div>
     <img class="attachment" *ngIf="post.attachmentUrl" [src]="post.attachmentUrl">
     <span class="caption" fxLayout="row wrap">
         <clickable-string class="body-content" [string]="post.body"></clickable-string>
-        <!-- <span class="body-content" [innerHtml]="formatter.formatPostBody(post.body, post.userId) | keepHtml"></span> -->
     </span>
 </div>

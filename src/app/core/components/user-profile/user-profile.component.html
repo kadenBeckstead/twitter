@@ -3,6 +3,7 @@
         <mat-icon *ngIf="user.back" [svgIcon]="'chevron-left'" class="back-icon" (click)="goBack()"></mat-icon>
         <mat-icon *ngIf="user.backToFeed" [svgIcon]="'chevron-left'" class="back-icon" (click)="goToFeed()"></mat-icon>
         <div class="username">{{user.username}}</div>
+        <mat-icon (click)="openSettingsSheet()" class="settings-icon">settings</mat-icon>
         <div class="container-row" fxLayout="row" fxLayoutAlign="space-between center">
             <avatar class="avatar" size="medium"></avatar>
             <div class="stat-container" fxLayout="column" fxLayoutAlign="center center">
@@ -22,5 +23,3 @@
     <mat-divider class="divider"></mat-divider>
     <posts-list class="posts" [posts]="ff.service.users[user.id].posts"></posts-list>
 </div>
-<!-- <div class="content"> -->
-<!-- </div> -->

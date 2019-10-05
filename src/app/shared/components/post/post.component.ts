@@ -19,6 +19,8 @@ interface Post {
 export class PostComponent implements OnInit {
 
   @Input() post: Post;
+  @Input() isViewer: boolean = false;
+
   ff;
   username: string;
 
@@ -37,9 +39,22 @@ export class PostComponent implements OnInit {
   routeToProfile() {
     this.settings.changeRoute({
       title: 'user_outline',
-      route: 'profile',
+      route: 'app/profile',
       params: {...this.ff.profile.service.getSingleUser(this.post.userId), backToFeed: true}
     })
+  }
+
+  handleClick(el) {
+    let target = el.toElement.className;
+    if (target ===' username' || target === 'portrait') {
+      this.routeToProfile();
+    } else if (!this.isViewer) {
+      this.settings.changeRoute({
+        title: null,
+        route: 'app/viewer',
+        params: {...this.post}
+      })
+    }
   }
 
 }

@@ -1,0 +1,83 @@
+<div class="content" fxLayout="column">
+
+    <div class="center-content">
+        <!-- Log In -->
+        <div *ngIf="logIn" fxLayoutAlign="center center" fxLayout="column">
+            <img class="logo" src="../../../../assets/icons/instagram.svg">
+            <form fxLayout="column" fxLayoutGap="0.5rem" [formGroup]="signInForm" (ngSubmit)="signIn()">
+                <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                    (click)="handleInput.focus(); scroll()">
+                    <input #handleInput fxFlex="100%" class="searchBox"
+                        name="handle" placeholder="Handle" formControlName="handle" autocomplete="off"
+                        spellcheck="false">
+                </div>
+                <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                    (click)="passwordInput.focus(); scroll()">
+                    <input #passwordInput (keydown)="keyDownFunction($event, 1)" fxFlex="100%" class="searchBox"
+                        name="password" placeholder="Password" formControlName="password" autocomplete="off"
+                        spellcheck="false" type="password">
+                </div>
+            </form>
+            <div class="errors" fxLayoutAlign="start center" fxLayout="column">
+                <span class="error-text" *ngFor="let error of signInErrors">* {{error}}</span>
+            </div>
+            <button class="log-in-button" (click)="signIn()" [disabled]="!signInForm.valid" color="primary"
+                mat-flat-button>Log In</button>
+        </div>
+
+        <!-- Sign Up -->
+        <div *ngIf="!logIn" fxLayoutAlign="center center" fxLayout="column">
+                <img class="logo" src="../../../../assets/icons/instagram.svg">
+
+                <form fxLayout="column" fxLayoutGap="0.5rem" [formGroup]="newAccountForm" (ngSubmit)="createAccount()">
+                    <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                        (click)="firstNameInput.focus(); scroll()">
+                        <input #firstNameInput fxFlex="100%" class="searchBox"
+                            name="firstName" placeholder="First Name" formControlName="firstName" autocomplete="off"
+                            spellcheck="false">
+                    </div>
+                    <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                        (click)="lastNameInput.focus(); scroll()">
+                        <input #lastNameInput fxFlex="100%" class="searchBox"
+                            name="lastName" placeholder="Last Name" formControlName="lastName" autocomplete="off"
+                            spellcheck="false">
+                    </div>
+                    <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                        (click)="newHandleInput.focus(); scroll()">
+                        <input #newHandleInput fxFlex="100%" class="searchBox"
+                            name="newHandle" placeholder="Handle" formControlName="newHandle" autocomplete="off"
+                            spellcheck="false">
+                    </div>
+                    <div class="searchContainer" fxLayout="row" fxLayout="space-between center"
+                        (click)="newPasswordInput.focus(); scroll()">
+                        <input #newPasswordInput (keydown)="keyDownFunction($event, 2)" fxFlex="100%" class="searchBox"
+                            name="newPassword" placeholder="Choose a Password" formControlName="newPassword" autocomplete="off"
+                            spellcheck="false" type="password">
+                    </div>
+                </form>
+
+                <div class="errors" fxLayoutAlign="start center" fxLayout="column">
+                    <span class="error-text" *ngFor="let error of createAccountErrors">* {{error}}</span>
+                </div>
+                <div (click)="retrieveProfilePicture()" fxLayout="column" fxLayoutAlign="center center">
+                    <avatar [size]="'small'" [photoUrl]="profilePicture"></avatar>
+                    <span class="profile-picture link">Choose a Profile Picture</span>
+                </div>
+                <button class="log-in-button" (click)="createAccount()" [disabled]="!newAccountForm.valid" color="primary"
+                    mat-flat-button>Create Account</button>
+        </div>
+
+        <!-- OR -->
+        <div class="or-box">
+            <div class="or" fxLayout="row" fxLayoutGap="1rem">
+                <mat-divider  class="left-divider"></mat-divider>
+                <span>OR</span>
+                <mat-divider class="right-divider"></mat-divider>
+            </div>
+        </div>
+        <div class="message" fxLayout="row" fxLayoutGap="0.25rem" fxLayoutAlign="center center">
+            <span class="sub-text">{{logIn ? 'Don\'t have an account?' : 'Have an account already?'}}</span>
+            <span class="sub-text link" (click)="logIn = !logIn">{{logIn ? 'Sign Up' : 'Log in'}}</span>
+        </div>
+    </div>
+</div>
