@@ -1,15 +1,21 @@
 <div class="search-page" fxLayout="column">
     <div class="header" fxLayout="row" fxLayoutAlign="center center">
-        <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="input.focus()" (clickOutside)="input.blur()">
-            <input #searchInput="ngModel" #input id="input" (focus)="settings.setNavBar(false)" (keydown)="keyDownFunction($event)"
-                (focusout)="settings.setNavBar(true)" fxFlex="80%" class="searchBox" name="search" placeholder="Search"
-                [(ngModel)]="searchQuery" autocomplete="off" spellcheck="false">
+        <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="input.focus()"
+            (clickOutside)="input.blur()">
+            <input #searchInput="ngModel" #input id="input" (focus)="settings.setNavBar(false)"
+                (keydown)="keyDownFunction($event)" (focusout)="settings.setNavBar(true)" fxFlex="80%" class="searchBox"
+                name="search" placeholder="Search" [(ngModel)]="searchQuery" autocomplete="off" spellcheck="false">
         </div>
-        <button fxFlex="15vw" mat-flat-button *ngIf="searchQuery" (click)="searchQuery = ''; hideKeyboard()">Clear</button>
+        <button fxFlex="15vw" mat-flat-button *ngIf="searchQuery"
+            (click)="searchQuery = ''; hideKeyboard()">Clear</button>
     </div>
     <div class="content" click="hideKeyboard()">
         <div class="results" *ngIf="searchResults">
-            <account-row *ngFor="let user of searchResults" [showButtons]="false" [handle]="user.handle" [name]="user.username" [id]="user.id" [following]="ff.service.isAFollower(user.id, ff.service.base_user.id)"></account-row>
+            <span *ngFor="let user of searchResults">
+                <account-row *ngIf="user && user.id >= 0" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"
+                    [following]="ff.service.isAFollower(user.id, 0)"></account-row>
+                    <!-- TODO: Replace the       0     up above ^^ with a method to get currently signed in userId -->
+            </span>
         </div>
     </div>
 </div>

@@ -59,6 +59,7 @@ import {
 	RealDataService,
 	LocalSettingsService,
 	FormatterService,
+	LambdaConnectorService,
  } from './services';
 
 import { 
@@ -95,6 +96,7 @@ const services = [
 	RealDataService,
 	LocalSettingsService,
 	FormatterService,
+	LambdaConnectorService,
 ];
 
 const modulesToExport = [

@@ -1,6 +1,6 @@
 <div class="noscroll app-display" fxLayout="column">
-    <News-Feed *ngIf="settings.selectedRoute==='feed'" [params]="ffs.ff[settings.selectedRoute] || []"></News-Feed>
     <div class="content noscroll">
+        <News-Feed *ngIf="settings.selectedRoute==='feed'" [params]="ffs.ff[settings.selectedRoute] || []"></News-Feed>
         <router-outlet class="noscroll" *ngIf="settings.selectedRoute!=='feed'"></router-outlet>
     </div>
     <div class="footer noscroll" *ngIf="settings.showNavBar">

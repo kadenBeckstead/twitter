@@ -21,5 +21,5 @@
         </div>
     </div>
     <mat-divider class="divider"></mat-divider>
-    <posts-list class="posts" [posts]="ff.service.users[user.id].posts"></posts-list>
+    <posts-list *ngIf="user" class="posts" [isPosts]="true" [id]="user.id"></posts-list>
 </div>

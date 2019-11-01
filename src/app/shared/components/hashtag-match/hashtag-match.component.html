@@ -1,5 +1,5 @@
 <back-header [title]="'#' + hashtag">
     <div class="posts-list">
-        <posts-list [posts]="ff.service.getStatusesByHashtag(hashtag)"></posts-list>
+        <posts-list [hashtag]="true" [id]="hashtag"></posts-list>
     </div>
 </back-header>

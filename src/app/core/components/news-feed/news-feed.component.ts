@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { FeatureFlagsService } from 'src/app/shared/services';
+import { FeatureFlagsService, LambdaConnectorService } from 'src/app/shared/services';
 
 const { Camera } = Plugins;
 
@@ -12,18 +12,20 @@ const { Camera } = Plugins;
 export class NewsFeedComponent implements OnInit {
   @Input() params; // TODO: add types
 
-  username: string;
-  password: string;
-  submitted: boolean = false;
   ff;
+  posts;
 
   constructor(
-    private ffs: FeatureFlagsService
+    private ffs: FeatureFlagsService,
   ) {
     this.ff = ffs.ff.feed;
    }
 
-  ngOnInit() { }
+  ngOnInit() {
+    this.ff.service.getBaseUser().subscribe((res) => {
+      this.posts = res[0].following;
+    })
+  }
 
   async takePicture() {
     const image = await Camera.getPhoto({

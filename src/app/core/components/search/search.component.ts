@@ -2,6 +2,7 @@ import { Component, OnInit, ViewChild, AfterViewInit } from '@angular/core';
 import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/services';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 import { Plugins } from '@capacitor/core';
+import { Observable } from 'rxjs';
 
 const { Keyboard } = Plugins;
 
@@ -15,7 +16,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput', { static: false }) input;
   params;
   searchQuery: string = '';
-  searchResults: any[] = [];
+  searchResults: Observable<any>;
   ff;
 
   constructor(
@@ -28,26 +29,23 @@ export class SearchComponent implements OnInit, AfterViewInit {
 
   ngOnInit() {
     this.params = this.featureFlags['search'] || [];
-    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) ) {
+    if ( /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent) && Keyboard ) {
       Keyboard.setAccessoryBarVisible({isVisible: false});
     }
   }
 
   ngAfterViewInit() {
     this.input.valueChanges.pipe(debounceTime(500), distinctUntilChanged()).subscribe((value) => {
-      this.searchQueryChange(value)
+      if (value) {
+        this.ff.service.filterUsers(value).subscribe((results) => {
+          this.searchResults = results.users
+        })
+      }
     })
   }
 
-  searchQueryChange(value) {
-    this.searchResults = [];
-    if (value) {
-      this.searchResults = this.ff.service.filterUsers(value);
-    }
-  }
-
   hideKeyboard() {
-    Keyboard.hide();
+    Keyboard && Keyboard.hide();
   }
 
   keyDownFunction(event) {

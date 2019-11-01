@@ -33,7 +33,9 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.username = this.ff.feed.service.getUserName(this.post.userId)
+    this.ff.feed.service.getSingleUser(this.post.userId).subscribe((res) => {
+      this.username = res[0].username
+    })
   }
 
   routeToProfile() {

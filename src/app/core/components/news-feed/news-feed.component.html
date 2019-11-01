@@ -1,7 +1,9 @@
 <div class="container noscroll" fxLayout="column">
     <mat-icon (click)="takePicture()" class="camera" svgIcon="camera"></mat-icon>
-    <div class="header sticky" fxLayout="row" fxLayoutAlign="center center">
-        <span class="logo" fxLayoutAlign="center center"><span>Instagram</span></span>
+    <div style="height:100%;">
+        <div class="header sticky" fxLayout="row" fxLayoutAlign="center center">
+            <span class="logo" fxLayoutAlign="center center"><span>Instagram</span></span>
+        </div>
+        <posts-list *ngIf="posts" class="posts" [isNewsFeed]="true" [posts]="posts"></posts-list>
     </div>
-    <posts-list class="posts" [posts]="ff.service.getNewsFeed(this.ff.service.base_user.id)"></posts-list>
 </div>

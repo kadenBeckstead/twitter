@@ -59,7 +59,6 @@ export class LoginComponent implements OnInit {
     }
   }
   scroll() {
-    console.log('scrolling')
     window.scrollTo(0, 0);
     document.body.scrollTop = 0;
   }

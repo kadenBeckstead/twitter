@@ -56,16 +56,16 @@ export class ClickableStringComponent implements OnInit {
     })
   }
 
-  mention(word: string) {
+  async mention(word: string) {
     let handle = word.slice(1,word.length);
-    let mentionedUser = this.ff.service.getSingleUserByHandle(handle);
-
-    this.settings.changeRoute({
-      title: 'user_outline',
-      route: 'app/profile',
-      params: {...mentionedUser, back: true}
+    this.ff.service.getSingleUserByHandle(handle).subscribe((results) => {
+      let mentionedUser = results[0]
+      this.settings.changeRoute({
+        title: 'user_outline',
+        route: 'app/profile',
+        params: { ...mentionedUser, back: true }
+      })
     })
-
   }
 
 }

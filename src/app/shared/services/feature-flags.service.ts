@@ -8,14 +8,14 @@ import { DummyDataService } from './dummy-data.service';
 export class FeatureFlagsService {
 
   ff = {
-    feed:          { data: false, display: true, name: 'feed' },
-    search:        { data: false, display: true, name: 'search' },
+    feed:          { data: true, display: true, name: 'feed' },
+    search:        { data: true, display: true, name: 'search' },
     add:           { data: false, display: true, name: 'add' },
-    notifications: { data: false, display: false, name: 'notifications' }, // TODO: Is this necessary
-    profile:       { data: false, display: true, name: 'profile' },
+    notifications: { data: false, display: false, name: 'notifications' }, // TODO: Is this necessary?
+    profile:       { data: true, display: true, name: 'profile' },
   };
 
-  constructor(
+  constructor (
     private real: RealDataService,
     private dummy: DummyDataService,
   ) { 

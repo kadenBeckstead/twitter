@@ -3,3 +3,4 @@ export * from './feature-flags.service';
 export * from './real-data.service';
 export * from './local-settings.service';
 export * from './formatter.service';
+export * from './lambda-connector.service';

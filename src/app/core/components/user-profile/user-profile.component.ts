@@ -13,6 +13,7 @@ export class UserProfileComponent implements OnInit {
 
   user: any;
   ff;
+  posts;
   
   constructor(
     private router: Router,
@@ -25,7 +26,6 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    // this.user = this.route.snapshot.queryParams;
     this.route.queryParams.subscribe((a) => {
       this.user = a;
     })

@@ -4,6 +4,7 @@ import { FlexLayoutModule } from '@angular/flex-layout';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { HttpClientModule } from "@angular/common/http";
 import { RouterModule } from '@angular/router';
+import {ScrollingModule} from '@angular/cdk/scrolling';
 
 import { routes } from './app.routes';
 import { AppComponent } from './app.component';
@@ -17,7 +18,8 @@ const modules = [
 	RouterModule.forRoot(routes, { useHash: false }),
 	FlexLayoutModule,
 	HttpClientModule,
-  
+	// ScrollingModule,
+
   	CoreModule,
 	SharedModule,
 	LoginModule,

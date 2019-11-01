@@ -21,7 +21,6 @@ export class HashtagMatchComponent implements OnInit {
 
   ngOnInit() {
     this.hashtag = this.route.snapshot.queryParams.hash
-    console.log(this.hashtag)
   }
 
 }

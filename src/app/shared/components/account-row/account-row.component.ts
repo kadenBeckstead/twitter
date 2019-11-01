@@ -27,8 +27,11 @@ export class AccountRowComponent implements OnInit {
   ngOnInit() {
   }
 
-  openUserProfile() {
-    this.router.navigate(['app/profile'], {queryParams: {...this.ff.profile.service.getSingleUser(this.id), back: true}})
+  async openUserProfile() {
+    this.ff.profile.service.getSingleUser(this.id).subscribe((results) => {
+      let user = results[0]
+      this.router.navigate(['app/profile'], {queryParams: {...user, back: true}})
+    })
   }
 
   toggleFollow() {

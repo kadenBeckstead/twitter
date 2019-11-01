@@ -1,12 +1,26 @@
-<back-header [title]="currentProfile.handle">
-    <mat-tab-group mat-stretch-tabs [disableRipple]="true" [selectedIndex]="tabIsFollowing ? 1 : 0">
-        <mat-tab [label]="followers.length + ' Followers'">
-        <account-row [handle]="user.handle" [id]="user.id" [name]="user.username" [following]="ff.profile.service.isAFollower(user.id, userId)"
-                *ngFor="let user of followers"></account-row>
-        </mat-tab>
-        <mat-tab [label]="following.length + ' Following'">
-            <account-row [handle]="user.handle" [id]="user.id" [name]="user.username" [following]="ff.profile.service.isAFollower(user.id, userId)"
-                *ngFor="let user of following"></account-row>
-        </mat-tab>
-    </mat-tab-group>
+<back-header *ngIf="currentProfile" [title]="currentProfile.handle" style="height: 100%; overflow: hidden;">
+    <div style="height: 93%; overflow: hidden;">
+        <mat-tab-group mat-stretch-tabs [disableRipple]="true" [selectedIndex]="tabIsFollowing ? 1 : 0"
+            (selectedTabChange)="resetTabs($event)">
+
+
+            <mat-tab [label]="(currentProfile.followers?.length ? currentProfile.followers.length : '') + ' Followers'">
+                <div #scrollableFollowers style="height: 100%; overflow: auto;">
+                    <account-row [handle]="user?.handle" [id]="user?.id" [name]="user?.username"
+                        [following]="ff.service.isAFollower(userId, user.id)" *ngFor="let user of relevantFollowers">
+                    </account-row>
+                </div>
+            </mat-tab>
+
+
+            <mat-tab [label]="(currentProfile.following?.length ? currentProfile.following.length : '') + ' Following'">
+                <div #scrollableFollowing style="height: 100%; overflow: auto;">
+                    <account-row [handle]="user?.handle" [id]="user?.id" [name]="user?.username"
+                        [following]="ff.service.isAFollower(user.id, userId)" *ngFor="let user of relevantFollowing">
+                    </account-row>
+                </div>
+            </mat-tab>
+
+        </mat-tab-group>
+    </div>
 </back-header>

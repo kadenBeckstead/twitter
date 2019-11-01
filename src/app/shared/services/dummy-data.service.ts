@@ -10,7 +10,7 @@ export class DummyDataService {
   kadenPosts = [
     { id: 0, userId: 0, timestamp: 1, title: 'init', body: 'my initial post here', attachmentUrl: null },
     { id: 1, userId: 0, timestamp: 2, title: 'class', body: 'man, 452 is pretty boring today', attachmentUrl: null },
-    { id: 2, userId: 0, timestamp: 4, title: 'Tired today', body: 'Man! I\'m super #tired today. I should have gone to #bed earlier last night! On the bright side, @linlula and I went to see Bastille!', attachmentUrl: '../../../assets/dummy/kaden1.jpeg' },
+    { id: 2, userId: 0, timestamp: 4, title: 'Tired today', body: 'Man! I\'m super #tired today. I should have gone to #bed earlier last night! On the bright side, @linlula and I went to see Bastille! Can\'t wait #excited ', attachmentUrl: '../../../assets/dummy/kaden1.jpeg' },
     { id: 3, userId: 0, timestamp: 11, title: 'Busy', body: 'Working on my new project--StockMotion', attachmentUrl: null },
     { id: 14, userId: 0, timestamp: 14, title: 'Busy', body: 'another #random post', attachmentUrl: '../../../assets/dummy/kaden1.jpeg' },
   ]
@@ -24,13 +24,13 @@ export class DummyDataService {
 
   LindsayPosts = [
     { id: 8, userId: 2, timestamp: 6, title: 'Good Job!', body: 'This app is great! I\'m excited to use it!', attachmentUrl: '../../../assets/dummy/lindsay1.gif' },
-    { id: 9, userId: 2, timestamp: 12, title: 'UX', body: 'Working on a new prototype for StockMotion!', attachmentUrl: null },
+    { id: 9, userId: 2, timestamp: 12, title: 'UX', body: 'Working on a new prototype for @stockmotion123 i\'m #excited to see how it goes!!', attachmentUrl: null },
   ]
 
   PeytonPosts = [
     { id: 10, userId: 6, timestamp: 5, title: 'First Post', body: 'Nationwide is on your side', attachmentUrl: '../../../assets/dummy/peyton2.jpg' },
     { id: 11, userId: 6, timestamp: 9, title: 'Kids', body: 'Throwback to when I threw footballs at those kids... awkward!', attachmentUrl: null },
-    { id: 12, userId: 6, timestamp: 10, title: 'Ready for the game!', body: 'Hope Flacco and the Broncos can pull off their first win tonight!', attachmentUrl: null },
+    { id: 12, userId: 6, timestamp: 10, title: 'Ready for the game!', body: 'Hope Flacco and the Broncos can pull off their first win tonight! Shout out to @kaden_beckstead who was at the game!', attachmentUrl: null },
     { id: 13, userId: 6, timestamp: 13, title: 'Trash', body: 'Man, my old team isn\'t looking too good this season!', attachmentUrl: '../../../assets/dummy/peyton1.jpeg' },
   ]
 
@@ -46,7 +46,7 @@ export class DummyDataService {
     4: { id: 4, username: 'Katy Perry', handle: 'KPerry', photoUrl: null, followers: [1, 2, 3, 4, 5, 6, 7], following: [], posts: [] },
     5: { id: 5, username: 'Russel M. Nelson', handle: 'theProphet', photoUrl: null, followers: [0, 1, 2, 3], following: [6], posts: [] },
     6: { id: 6, username: 'Peyton Manning', handle: 'pMan18', photoUrl: null, followers: [0, 1, 3], following: [7], posts: this.PeytonPosts },
-    7: { id: 7, username: 'StockMotion', handle: 'stockMotion', photoUrl: null, followers: [0, 1, 3, 6], following: [0, 1, 2], posts: [] },
+    7: { id: 7, username: 'StockMotion', handle: 'stockmotion123', photoUrl: null, followers: [0, 1, 3, 6], following: [0, 1, 2], posts: [] },
   }
 
 
@@ -127,10 +127,6 @@ export class DummyDataService {
 
   isAFollower(possibleFollowerId: number, person: number) {
     return this.users[person].following.includes(possibleFollowerId)
-  }
-
-  isFollowing(person: number, isFollowingId: number) {
-    return this.users[person].following.includes(isFollowingId)
   }
 
   getListOfUsers(arr: any[]) {

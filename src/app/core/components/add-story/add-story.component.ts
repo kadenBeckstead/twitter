@@ -11,17 +11,17 @@ const { Camera } = Plugins;
   styleUrls: ['./add-story.component.less']
 })
 export class AddStoryComponent implements OnInit {
-  params;
-  status;
+  body;
   title;
+  ff;
 
   constructor(
-    private featureFlags: FeatureFlagsService
-  ) { }
-
-  ngOnInit() {
-    this.params = this.featureFlags['add'] || [];
+    private ffs: FeatureFlagsService
+  ) {
+    this.ff = ffs.ff.feed;
   }
+
+  ngOnInit() { }
 
   async getAttachment() {
     const image = await Camera.getPhoto({
@@ -29,9 +29,9 @@ export class AddStoryComponent implements OnInit {
       allowEditing: true,
       resultType: CameraResultType.Uri
     });
-    
+
     var imageUrl = image.webPath;
-    
+
     // imageElement.src = imageUrl;
   }
 
@@ -39,6 +39,16 @@ export class AddStoryComponent implements OnInit {
     if (code === 13) {
       document.getElementById('textarea').focus()
     }
+  }
+
+  sendAttachment() {
+    this.ff.service.getBaseUser().subscribe((user) => {
+      let userId = user[0].id;
+      let attachmentUrl = '';
+      this.ff.service.postStatus(userId, this.title, attachmentUrl, this.body).subscribe((res) => {
+        console.log(res)
+      })
+    })
   }
 
 }
