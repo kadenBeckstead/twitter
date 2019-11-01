@@ -12,19 +12,23 @@ export class AccountRowComponent implements OnInit {
   @Input() handle: string = 'undefined';
   @Input() id: number;
   @Input() name: string = 'undefined';
-  @Input() following: boolean = false;
+  @Input() base_user_id: number = null;
   @Input() showButtons: boolean = true;
 
   ff;
+  following = true;
 
   constructor(
     private router: Router,
     private ffs: FeatureFlagsService
   ) { 
-    this.ff = ffs.ff;
+    this.ff = ffs.ff.profile;
   }
 
   ngOnInit() {
+    this.ff.service.isAFollower(this.base_user_id, this.id).subscribe((res) => {
+      this.following = res.isFollower;
+    })
   }
 
   async openUserProfile() {

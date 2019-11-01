@@ -26,6 +26,8 @@ export class FollowListComponent implements OnInit {
   subFollowers;
   subFollowing;
 
+  counter = 0;
+
   pageSize = 10;
 
   relevantFollowers = [];
@@ -92,7 +94,6 @@ export class FollowListComponent implements OnInit {
       let observableFollowing = fromEvent(this.scrollableFollowing.nativeElement, 'scroll');
       this.subFollowing = observableFollowing.pipe(debounceTime(300))
       this.subFollowing.subscribe(() => {
-        console.log('scroll')
         if (this.scrollableFollowers.nativeElement.scrollHeight - this.scrollableFollowers.nativeElement.scrollTop === this.scrollableFollowers.nativeElement.clientHeight) {
           this.getBatch()
         }
@@ -107,7 +108,6 @@ export class FollowListComponent implements OnInit {
           this.lastKeyFollowers += posts.length;
           if (posts.length === 0) {
             this.theEndFollowers = true;
-            console.log('THE END!')
           }
           posts.forEach((item) => {
             this.relevantFollowers.push(item);
@@ -120,7 +120,6 @@ export class FollowListComponent implements OnInit {
           this.lastKeyFollowing += posts.length;
           if (posts.length === 0) {
             this.theEndFollowing = true;
-            console.log('THE END!')
           }
           posts.forEach((item) => {
             this.relevantFollowing.push(item);
@@ -149,18 +148,32 @@ export class FollowListComponent implements OnInit {
 
     this.fetch().subscribe((users: any[]) => {
       users.forEach((user) => {
-        if (i === 0) {
+        if (!this.tabIsFollowing) {
           this.relevantFollowers.push(user);
         } else {
           this.relevantFollowing.push(user);
         }
       })
-      if (i === 1) {
+      if (this.tabIsFollowing) {
         this.lastKeyFollowers += (users.length - 1);
       } else {
         this.lastKeyFollowing += (users.length - 1);
       }
     })
+  }
+
+  async getIsFollower(followerId: number, followeeId: number) {
+    this.counter+=1;
+
+    if (this.counter <= 30) {
+    await this.ff.service.isAFollower(followerId, followeeId).subscribe((res) => {
+      console.log(res.isFollower)
+        return res.isFollower;
+    })
+    } else {
+      console.log('MAX OUT ERROR')
+      return false;
+    }
   }
 
 }

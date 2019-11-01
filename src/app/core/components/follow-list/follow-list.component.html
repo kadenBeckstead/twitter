@@ -6,8 +6,8 @@
 
             <mat-tab [label]="(currentProfile.followers?.length ? currentProfile.followers.length : '') + ' Followers'">
                 <div #scrollableFollowers style="height: 100%; overflow: auto;">
-                    <account-row [handle]="user?.handle" [id]="user?.id" [name]="user?.username"
-                        [following]="ff.service.isAFollower(userId, user.id)" *ngFor="let user of relevantFollowers">
+                    <account-row [handle]="user?.handle" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
+                        *ngFor="let user of relevantFollowers">
                     </account-row>
                 </div>
             </mat-tab>
@@ -15,8 +15,8 @@
 
             <mat-tab [label]="(currentProfile.following?.length ? currentProfile.following.length : '') + ' Following'">
                 <div #scrollableFollowing style="height: 100%; overflow: auto;">
-                    <account-row [handle]="user?.handle" [id]="user?.id" [name]="user?.username"
-                        [following]="ff.service.isAFollower(user.id, userId)" *ngFor="let user of relevantFollowing">
+                    <account-row [handle]="user?.handle" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
+                        *ngFor="let user of relevantFollowing">
                     </account-row>
                 </div>
             </mat-tab>

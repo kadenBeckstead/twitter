@@ -12,9 +12,7 @@
     <div class="content" click="hideKeyboard()">
         <div class="results" *ngIf="searchResults">
             <span *ngFor="let user of searchResults">
-                <account-row *ngIf="user && user.id >= 0" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"
-                    [following]="ff.service.isAFollower(user.id, 0)"></account-row>
-                    <!-- TODO: Replace the       0     up above ^^ with a method to get currently signed in userId -->
+                <account-row *ngIf="user && user.id >= 0" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"></account-row>
             </span>
         </div>
     </div>
