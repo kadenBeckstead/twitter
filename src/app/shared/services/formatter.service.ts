@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import * as moment from 'moment';
+import * as uuid from 'uuid';
 import { FeatureFlagsService } from './feature-flags.service';
 @Injectable({
   providedIn: 'root'
@@ -26,6 +27,10 @@ export class FormatterService {
 
   formatString(string, length) {
     return [string.length > length ? string.substring(0, length) + "..." : string, string] // [formatted string, original string]
+  }
+
+  getRandomKey() {
+    return uuid.v4();
   }
 
   isScrolledIntoView(el) {

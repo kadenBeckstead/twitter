@@ -7,7 +7,7 @@
         <span class="menu-icons" fxLayoutAlign="space-around center">
             <ng-container *ngFor="let icon of menuIcons">
                 <mat-icon class="icon" [svgIcon]="settings.selectedIcon === icon.title ? icon.active : icon.title"
-                    (click)="settings.changeRoute(icon)" *ngIf="ffs.ff[icon.featureFlag].display"></mat-icon>
+                    (click)="settings.changeRoute(icon)" *ngIf="ffs.ff[icon.featureFlag]?.display"></mat-icon>
             </ng-container>
         </span>
     </div>

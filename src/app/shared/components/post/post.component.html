@@ -1,11 +1,13 @@
 <div class="post" [class.viewer]="isViewer" fxLayout="column" fxLayoutAlign="start center">
     <div class="header" fxLayout="row" fxLayoutAlign="start start" (click)="handleClick($event)">
         <span fxLayout="row" fxLayoutAlign="start center">
-        <avatar class="avatar" [size]="'x-small'" [photoUrl]="post.photoUrl"></avatar>
-        <div *ngIf="username" class="username">{{username}}</div>
-    </span>
+            <avatar class="avatar" [size]="'x-small'" [photoUrl]="post.photoUrl"></avatar>
+            <div *ngIf="username" class="username">{{username}}</div>
+        </span>
     </div>
-    <img class="attachment" *ngIf="post.attachmentUrl" [src]="post.attachmentUrl">
+    <img *ngIf="post.attachmentType === 'photo'" class="attachment" [src]="post.attachmentUrl">
+    <iframe *ngIf="post.attachmentType === 'video'" width="275" height="200" [src]="VideoURL()" frameborder="0"
+        allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <span class="caption" fxLayout="row wrap">
         <clickable-string class="body-content" [string]="post.body"></clickable-string>
     </span>

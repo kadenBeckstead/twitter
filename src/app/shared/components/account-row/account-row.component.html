@@ -6,8 +6,8 @@
             <div class="user-name">{{name}}</div>
         </div>
     </div>
-    <div class="follow-row" *ngIf="showButtons">
-        <button *ngIf="!following" class="follow-button" mat-flat-button color="primary">Follow</button>
-        <button *ngIf="following" class="follow-button" mat-stroked-button color="white">Following</button>
+    <div class="follow-row" *ngIf="showButtons && (following !== null)">
+        <button *ngIf="!following" (click)="toggleFollow()" class="follow-button" mat-flat-button color="primary">Follow</button>
+        <button *ngIf="following" (click)="toggleFollow()" class="follow-button" mat-stroked-button color="white">Following</button>
     </div>
 </div>

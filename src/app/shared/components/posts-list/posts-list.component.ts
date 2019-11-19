@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, Output } from '@angular/core';
 import { LambdaConnectorService } from '../../services';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -37,7 +37,7 @@ export class PostsListComponent implements OnInit, AfterViewInit {
 
   ngAfterViewInit() {
     let source = fromEvent(this.scrollableEl.nativeElement, 'scroll');
-    let ex = source.pipe(debounceTime(300))
+    let ex = source.pipe(debounceTime(150))
 
     ex.subscribe(() => {
       if (this.scrollableEl.nativeElement.scrollHeight - this.scrollableEl.nativeElement.scrollTop === this.scrollableEl.nativeElement.clientHeight) {

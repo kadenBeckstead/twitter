@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Plugins, CameraResultType } from '@capacitor/core';
-import { FeatureFlagsService, LambdaConnectorService } from 'src/app/shared/services';
+import { FeatureFlagsService, LambdaConnectorService, LocalSettingsService } from 'src/app/shared/services';
 
 const { Camera } = Plugins;
 
@@ -17,14 +17,19 @@ export class NewsFeedComponent implements OnInit {
 
   constructor(
     private ffs: FeatureFlagsService,
+    private settings: LocalSettingsService,
   ) {
     this.ff = ffs.ff.feed;
    }
 
   ngOnInit() {
-    this.ff.service.getBaseUser().subscribe((res) => {
-      this.posts = res[0].following;
-    })
+    this.settings.appLoaded.subscribe((loaded) => {
+      if (loaded) {
+        this.ff.service.getBaseUser().subscribe((res) => {
+          res.length > 0 && (this.posts = res[0].following);
+        })
+      }
+    });
   }
 
   async takePicture() {

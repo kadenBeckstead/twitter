@@ -80,7 +80,7 @@ export class FollowListComponent implements OnInit {
   setFollowersListener() {
     if (!this.tabIsFollowing && this.scrollableFollowers) {
       let observableFollowers = fromEvent(this.scrollableFollowers.nativeElement, 'scroll');
-      this.subFollowers = observableFollowers.pipe(debounceTime(300))
+      this.subFollowers = observableFollowers.pipe(debounceTime(150))
       this.subFollowers.subscribe(() => {
         if (this.scrollableFollowers.nativeElement.scrollHeight - this.scrollableFollowers.nativeElement.scrollTop === this.scrollableFollowers.nativeElement.clientHeight) {
           this.getBatch()
@@ -92,7 +92,7 @@ export class FollowListComponent implements OnInit {
   setFollowingListener() {
     if (this.tabIsFollowing && this.scrollableFollowing){
       let observableFollowing = fromEvent(this.scrollableFollowing.nativeElement, 'scroll');
-      this.subFollowing = observableFollowing.pipe(debounceTime(300))
+      this.subFollowing = observableFollowing.pipe(debounceTime(150))
       this.subFollowing.subscribe(() => {
         if (this.scrollableFollowers.nativeElement.scrollHeight - this.scrollableFollowers.nativeElement.scrollTop === this.scrollableFollowers.nativeElement.clientHeight) {
           this.getBatch()
@@ -167,7 +167,6 @@ export class FollowListComponent implements OnInit {
 
     if (this.counter <= 30) {
     await this.ff.service.isAFollower(followerId, followeeId).subscribe((res) => {
-      console.log(res.isFollower)
         return res.isFollower;
     })
     } else {

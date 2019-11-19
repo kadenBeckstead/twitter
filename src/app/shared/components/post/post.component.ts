@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FeatureFlagsService, FormatterService, LocalSettingsService } from '../../services';
+import { DomSanitizer } from "@angular/platform-browser";
 
 interface Post {
   id: number, 
@@ -8,6 +9,7 @@ interface Post {
   title: string, 
   body: string, 
   attachmentUrl: string | null;
+  attachmentType: 'video' | 'photo';
   photoUrl: string | null;
 }
 
@@ -27,7 +29,8 @@ export class PostComponent implements OnInit {
   constructor(
     private ffs: FeatureFlagsService,
     public formatter: FormatterService,
-    private settings: LocalSettingsService
+    private settings: LocalSettingsService,
+    private sanitizer: DomSanitizer,
   ) { 
     this.ff = ffs.ff;
   }
@@ -57,6 +60,10 @@ export class PostComponent implements OnInit {
         params: {...this.post}
       })
     }
+  }
+
+  VideoURL() {
+    return this.sanitizer.bypassSecurityTrustResourceUrl(this.post.attachmentUrl);
   }
 
 }

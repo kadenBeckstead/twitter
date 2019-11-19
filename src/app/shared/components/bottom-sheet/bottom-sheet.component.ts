@@ -8,18 +8,24 @@ import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
   styleUrls: ['./bottom-sheet.component.less']
 })
 export class BottomSheetComponent implements OnInit {
+  fileToUpload: File = null;
+
 
   constructor(
     public settings: LocalSettingsService,
     public bottomSheetRef: MatBottomSheetRef,
   ) { }
 
-  ngOnInit() {
-  }
+  ngOnInit() {}
 
   signOut() {
     this.bottomSheetRef.dismiss();
     this.settings.signOut();
+  }
+
+  handleFileInput(files: FileList) {
+    this.fileToUpload = files.item(0);
+    this.settings.updateProfilePic(this.fileToUpload);
   }
 
 }

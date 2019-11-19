@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { observable } from 'mobx-angular'
 import { Router } from '@angular/router';
-import { Plugins, CameraResultType } from '@capacitor/core';
-
-const { Camera } = Plugins;
+import * as AWS from 'aws-sdk/global';
+import * as S3 from 'aws-sdk/clients/s3';
+import { BehaviorSubject } from 'rxjs';
 
 
 @Injectable({
@@ -14,6 +14,10 @@ export class LocalSettingsService {
   @observable showNavBar: boolean = true;
   @observable selectedIcon: string = 'home_outline';
   @observable selectedRoute: string = 'feed';
+  userId: string = null;
+  appLoaded: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  uploadLocation: BehaviorSubject<string|null> = new BehaviorSubject(null)
+
 
   constructor(
     private router: Router,
@@ -23,6 +27,12 @@ export class LocalSettingsService {
     this.showNavBar = !this.showNavBar;
   }
 
+  setUserId(id: string) {
+    this.userId = id;
+    this.appLoaded.next(true);
+    this.router.navigate(['app/feed'])
+  }
+
   setNavBar(setting: boolean) {
     this.showNavBar = setting;
   }
@@ -30,7 +40,7 @@ export class LocalSettingsService {
   changeRoute(params) {
     this.selectedIcon = params.title;
     this.selectedRoute = params.route;
-    this.router.navigate([params.route], {queryParams: {...params.params}})
+    this.router.navigate([params.route], { queryParams: { ...params.params } })
   }
 
   signOut() {
@@ -38,14 +48,30 @@ export class LocalSettingsService {
     this.router.navigate(['login'])
   }
 
-  async updateProfilePic() {
-
-      const image = await Camera.getPhoto({
-        quality: 90,
-        allowEditing: true,
-        resultType: CameraResultType.Uri
-      });
-      let imageUrl = image.webPath;
-      // TODO: set profilePic = imageUrl;
+  updateProfilePic(file: any) {
+    const contentType = file.type;
+    const bucket = new S3(
+      {
+        accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
+        secretAccessKey: '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',
+        region: 'us-east-1'
+      }
+    );
+    const params = {
+      Bucket: 'instagram-user-profile-pictures',
+      Key: file.name,
+      Body: file,
+      ACL: 'public-read',
+      ContentType: contentType
+    };
+    bucket.upload(params, (err, data) => {
+      if (err) {
+        console.log('There was an error uploading your file: ', err);
+        return false;
+      }
+      this.uploadLocation.next(data.Location);
+      return true;
+    });
+    return this.uploadLocation;
   }
 }

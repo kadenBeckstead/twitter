@@ -1,24 +1,28 @@
-<div class="profile" fxLayout="column">
+<div class="profile" fxLayout="column" *ngIf="user">
     <div class="header" fxLayout="column" fxLayoutAlign="center center">
         <mat-icon *ngIf="user.back" [svgIcon]="'chevron-left'" class="back-icon" (click)="goBack()"></mat-icon>
         <mat-icon *ngIf="user.backToFeed" [svgIcon]="'chevron-left'" class="back-icon" (click)="goToFeed()"></mat-icon>
         <div class="username">{{user.username}}</div>
         <mat-icon (click)="openSettingsSheet()" class="settings-icon">settings</mat-icon>
         <div class="container-row" fxLayout="row" fxLayoutAlign="space-between center">
-            <avatar class="avatar" size="medium"></avatar>
-            <div class="stat-container" fxLayout="column" fxLayoutAlign="center center">
-                <span>{{user.posts?.length || 0}}</span>
+            <avatar class="avatar" size="medium" [photoUrl]="user.photoUrl || null"></avatar>
+            <!-- <div class="stat-container" fxLayout="column" fxLayoutAlign="center center">
+                <span>{{ff.service.getUserPosts(user.id)?.length || 0}}</span>
                 <span>Posts</span>
-            </div>
+            </div> -->
             <div class="stat-container" fxLayout="column" fxLayoutAlign="center center" (click)="showFollowers()">
-                <span>{{user.followers?.length}}</span>
+                <span>{{user.followers?.length || 0}}</span>
                 <span>Followers</span>
             </div>
             <div class="stat-container" fxLayout="column" fxLayoutAlign="center center" (click)="showFollowing()">
-                <span>{{user.following?.length}}</span>
+                <span>{{user.following?.length || 0}}</span>
                 <span>Following</span>
             </div>
         </div>
+        <span *ngIf="showButton">
+            <button *ngIf="!following" (click)="toggleFollow()" class="follow-button" mat-flat-button color="primary">Follow</button>
+            <button *ngIf="following" (click)="toggleFollow()" class="follow-button" mat-stroked-button color="white">Following</button>
+        </span>
     </div>
     <mat-divider class="divider"></mat-divider>
     <posts-list *ngIf="user" class="posts" [isPosts]="true" [id]="user.id"></posts-list>

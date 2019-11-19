@@ -1,18 +1,24 @@
 <div class="add-story" fxLayout="column" fxLayoutAlign="center center">
-    <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="passwordInput.focus()">
-        <input #passwordInput (keydown)="focus($event.keyCode)" fxFlex="100%" class="searchBox" placeholder="Title"
+    <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="postTitle.focus()">
+        <input #postTitle (keydown)="focus($event.keyCode)" fxFlex="100%" class="searchBox" placeholder="Title"
             autocomplete="off" spellcheck="false" [(ngModel)]="title">
     </div>
-    <button (click)="getAttachment()" mat-flat-button class="attachment" fxLayoutAlign="center center">
-        <span>Add an attachment?</span>
-        <mat-icon [svgIcon]="'add-photo'" class="photo-icon"></mat-icon>
-    </button>
+    <label>Attachment Type</label>
+    <mat-radio-group class="radio-buttons" fxLayoutGap="1rem" [(ngModel)]="attachmentType">
+        <mat-radio-button checked >None</mat-radio-button>
+        <mat-radio-button value="video">Video</mat-radio-button>
+        <mat-radio-button value="photo">Photo</mat-radio-button>
+    </mat-radio-group>
+    <div *ngIf="attachmentType" class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="attachmentUrlInput.focus()">
+        <input #attachmentUrlInput fxFlex="100%" class="searchBox" placeholder="Attachment URL" autocomplete="off" spellcheck="false"
+            [(ngModel)]="attachmentUrl">
+    </div>
     <mat-form-field class="form-field">
         <textarea id="textarea" [cdkAutosizeMinRows]="5" [cdkTextareaAutosize]="true" matInput
             placeholder="What's on your mind..." [(ngModel)]="body"></textarea>
     </mat-form-field>
 
-    <button mat-flat-button class="send attachment" fxLayoutAlign="center center">
-        <span (click)="sendAttachment()">Send</span>
+    <button mat-flat-button class="send attachment" fxLayoutAlign="center center" (click)="sendStatus()">
+        <span>Send</span>
     </button>
 </div>

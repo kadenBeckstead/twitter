@@ -12,9 +12,12 @@ import { BottomSheetComponent } from '../../../shared/components'
 export class UserProfileComponent implements OnInit {
 
   user: any;
+  baseUser: any;
   ff;
   posts;
-  
+  following: boolean = null;
+  showButton: boolean = false;
+
   constructor(
     private router: Router,
     private route: ActivatedRoute,
@@ -26,17 +29,37 @@ export class UserProfileComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.route.queryParams.subscribe((a) => {
-      this.user = a;
+    this.route.queryParams.subscribe(async (a) => {
+      this.ff.service.getSingleUser(a.id).subscribe((b) => {
+        this.user = {...b[0], back: true}
+        this.ff.service.getBaseUser().subscribe((baseUser) => {
+          this.baseUser = baseUser[0];
+          this.showButton = this.baseUser.id !== this.user.id;
+          if (this.showButton) {
+            this.ff.service.isAFollower(this.baseUser.id, this.user.id).subscribe((res) => {
+              this.following = res.isAFollower;
+            })
+          }
+        })
+      })
     })
   }
 
+  toggleFollow() {
+    if (this.following) {
+      this.ff.service.unfollow(this.baseUser.id, this.user.id).subscribe()
+    } else {
+      this.ff.service.makeFollower(this.baseUser.id, this.user.id).subscribe()
+    }
+    this.following = !this.following;
+  }
+
   showFollowers() {
-    this.router.navigate(['app/follow'], {queryParams: {tab: 'followers', id: this.user.id}});
+    this.router.navigate(['app/follow'], { queryParams: { tab: 'followers', id: this.user.id } });
   }
 
   showFollowing() {
-    this.router.navigate(['app/follow'], {queryParams: {tab: 'following', id: this.user.id}});
+    this.router.navigate(['app/follow'], { queryParams: { tab: 'following', id: this.user.id } });
   }
 
   goBack() {

@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FeatureFlagsService } from 'src/app/shared/services';
-import { Plugins, CameraResultType } from '@capacitor/core';
-
-const { Camera } = Plugins;
+import { Browser } from '@capacitor/core';
 
 
 @Component({
@@ -13,6 +11,8 @@ const { Camera } = Plugins;
 export class AddStoryComponent implements OnInit {
   body;
   title;
+  attachmentType = null;
+  attachmentUrl;
   ff;
 
   constructor(
@@ -23,31 +23,20 @@ export class AddStoryComponent implements OnInit {
 
   ngOnInit() { }
 
-  async getAttachment() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-
-    var imageUrl = image.webPath;
-
-    // imageElement.src = imageUrl;
-  }
-
   focus(code) {
     if (code === 13) {
       document.getElementById('textarea').focus()
     }
   }
 
-  sendAttachment() {
+  sendStatus() {
     this.ff.service.getBaseUser().subscribe((user) => {
       let userId = user[0].id;
-      let attachmentUrl = '';
-      this.ff.service.postStatus(userId, this.title, attachmentUrl, this.body).subscribe((res) => {
-        console.log(res)
-      })
+      let attachment = {}
+      if (this.attachmentType !== 'none') {
+        attachment = {attachmentType: this.attachmentType, attachmentUrl: this.attachmentUrl}
+      }
+      this.ff.service.postStatus(userId, this.title, attachment, this.body).subscribe();
     })
   }
 

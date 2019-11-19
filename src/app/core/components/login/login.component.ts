@@ -1,10 +1,10 @@
 import { Component, OnInit } from '@angular/core';
-import { Plugins, CameraResultType } from '@capacitor/core';
 import { FormGroup, FormBuilder, FormControl, Validators, ValidationErrors } from '@angular/forms';
 import * as _ from 'lodash';
 import { Router } from '@angular/router';
-
-const { Keyboard, Camera } = Plugins;
+import { AngularFireAuth } from '@angular/fire/auth'
+import { User } from 'Instagram';
+import { RealDataService, LocalSettingsService } from 'src/app/shared/services';
 
 
 @Component({
@@ -20,10 +20,15 @@ export class LoginComponent implements OnInit {
   signInErrors = [];
   createAccountErrors = [];
   profilePicture;
+  errorMessage: string = null;
+  photoUrl: string = null;
 
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private af: AngularFireAuth,
+    private realData: RealDataService,
+    private settings: LocalSettingsService,
   ) { }
 
   ngOnInit() {
@@ -43,19 +48,35 @@ export class LoginComponent implements OnInit {
     this.signInErrors = [];
     this.signInErrors = this.checkForErrors(this.signInForm)
 
-    if (!this.signInErrors.length && this.signInForm.valid) {
-      // TODO: handle sign in form here
-      this.router.navigate(['app/feed'])
+    if(!this.signInErrors.length && this.signInForm.valid) {
+      this.af.auth.signInWithEmailAndPassword(`${this.signInForm.value.handle}@340instagram.com`, this.signInForm.value.password).then((user) => {
+        let userId = user.user.uid;
+        this.settings.setUserId(userId);
+      }).catch((e: any) => {
+        console.log(e.message)
+        this.errorMessage = e.message;
+      });
     }
   }
 
-  createAccount() {
+  async createAccount() {
     this.createAccountErrors = [];
     this.createAccountErrors = this.checkForErrors(this.newAccountForm);
 
-    if (!this.createAccountErrors.length && this.newAccountForm.valid) {
-      // TODO: handle new account form here
-      this.router.navigate(['app/feed'])
+    if(!this.createAccountErrors.length && this.newAccountForm.valid) {
+      this.af.auth.createUserWithEmailAndPassword(`${this.newAccountForm.value.newHandle}@340instagram.com`, this.newAccountForm.value.newPassword).then((user) => {
+        let newUser: User = {
+          id: user.user.uid,
+          username: this.newAccountForm.value.firstName + ' ' + this.newAccountForm.value.lastName,
+          handle: this.newAccountForm.value.newHandle,
+          following: [],
+          followers: []
+        } 
+        this.photoUrl && (newUser = {...newUser, photoUrl: this.photoUrl, followers: [], following: []})
+        this.realData.upsertItem('user', newUser)
+      }).catch((e: any) => {
+        this.errorMessage = e.message;
+      });
     }
   }
   scroll() {
@@ -91,32 +112,19 @@ export class LoginComponent implements OnInit {
     return _.uniq(errors);
   }
 
-  hideKeyboard() {
-    Keyboard.hide();
-  }
-
-  async retrieveProfilePicture() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-    // image.webPath will contain a path that can be set as an image src. 
-    // You can access the original file using image.path, which can be 
-    // passed to the Filesystem API to read the raw data of the image, 
-    // if desired (or pass resultType: CameraResultType.Base64 to getPhoto)
-
-    this.profilePicture = image.webPath;
+  async handleFileInput(files: FileList) {
+      let fileToUpload = files.item(0);
+      this.settings.updateProfilePic(fileToUpload).subscribe((val) => {
+        val && (this.photoUrl = val)
+      })
   }
 
   keyDownFunction(event, eventType) {
     if (event.keyCode === 13) {
       if (eventType === 1) {
-        this.hideKeyboard();
         this.signIn();
       }
       if (eventType === 2) {
-        this.hideKeyboard();
         this.createAccount();
       }
     }

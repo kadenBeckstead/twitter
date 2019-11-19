@@ -16,30 +16,37 @@ export class AccountRowComponent implements OnInit {
   @Input() showButtons: boolean = true;
 
   ff;
-  following = true;
+  following = null;
 
   constructor(
     private router: Router,
     private ffs: FeatureFlagsService
-  ) { 
+  ) {
     this.ff = ffs.ff.profile;
   }
 
   ngOnInit() {
-    this.ff.service.isAFollower(this.base_user_id, this.id).subscribe((res) => {
-      this.following = res.isFollower;
-    })
+    if (this.showButtons) {
+      this.ff.service.isAFollower(this.base_user_id, this.id).subscribe((res) => {
+        this.following = res.isAFollower;
+      })
+    }
   }
 
   async openUserProfile() {
-    this.ff.profile.service.getSingleUser(this.id).subscribe((results) => {
+    this.ff.service.getSingleUser(this.id).subscribe((results) => {
       let user = results[0]
-      this.router.navigate(['app/profile'], {queryParams: {...user, back: true}})
+      this.router.navigate(['app/profile'], { queryParams: { id: user.id, back: true } })
     })
   }
 
   toggleFollow() {
-    this.following = !this.following; // TODO: implement with db
+    if (this.following) {
+      this.ff.service.unfollow(this.base_user_id, this.id).subscribe()
+    } else {
+      this.ff.service.makeFollower(this.base_user_id, this.id).subscribe()
+    }
+    this.following = !this.following;
   }
 
 }

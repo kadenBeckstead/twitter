@@ -10,8 +10,7 @@ export class FeatureFlagsService {
   ff = {
     feed:          { data: true, display: true, name: 'feed' },
     search:        { data: true, display: true, name: 'search' },
-    add:           { data: false, display: true, name: 'add' },
-    notifications: { data: false, display: false, name: 'notifications' }, // TODO: Is this necessary?
+    add:           { data: true, display: true, name: 'add' },
     profile:       { data: true, display: true, name: 'profile' },
   };
 

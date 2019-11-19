@@ -2,17 +2,16 @@
     <div class="header" fxLayout="row" fxLayoutAlign="center center">
         <div class="searchContainer" fxLayout="row" fxLayout="space-between center" (click)="input.focus()"
             (clickOutside)="input.blur()">
-            <input #searchInput="ngModel" #input id="input" (focus)="settings.setNavBar(false)"
-                (keydown)="keyDownFunction($event)" (focusout)="settings.setNavBar(true)" fxFlex="80%" class="searchBox"
+            <input #searchInput="ngModel" #input id="input" fxFlex="80%" class="searchBox"
                 name="search" placeholder="Search" [(ngModel)]="searchQuery" autocomplete="off" spellcheck="false">
         </div>
         <button fxFlex="15vw" mat-flat-button *ngIf="searchQuery"
-            (click)="searchQuery = ''; hideKeyboard()">Clear</button>
+            (click)="searchQuery = ''; searchResults = []">Clear</button>
     </div>
-    <div class="content" click="hideKeyboard()">
+    <div class="content">
         <div class="results" *ngIf="searchResults">
             <span *ngFor="let user of searchResults">
-                <account-row *ngIf="user && user.id >= 0" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"></account-row>
+                <account-row *ngIf="user?.id" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"></account-row>
             </span>
         </div>
     </div>
