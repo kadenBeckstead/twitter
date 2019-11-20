@@ -1,6 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { FeatureFlagsService, FormatterService, LocalSettingsService } from '../../services';
 import { DomSanitizer } from "@angular/platform-browser";
+import { User } from 'Instagram';
 
 interface Post {
   id: number, 
@@ -11,6 +12,7 @@ interface Post {
   attachmentUrl: string | null;
   attachmentType: 'video' | 'photo';
   photoUrl: string | null;
+  creatorId?: string
 }
 
 @Component({
@@ -25,6 +27,7 @@ export class PostComponent implements OnInit {
 
   ff;
   username: string;
+  user: User;
 
   constructor(
     private ffs: FeatureFlagsService,
@@ -36,8 +39,10 @@ export class PostComponent implements OnInit {
   }
 
   ngOnInit() {
-    this.ff.feed.service.getSingleUser(this.post.userId).subscribe((res) => {
+    let idToUse = this.post.creatorId || this.post.userId;
+    this.ff.feed.service.getSingleUser(idToUse).subscribe((res) => {
       this.username = res[0].username
+      this.user = res[0];
     })
   }
 

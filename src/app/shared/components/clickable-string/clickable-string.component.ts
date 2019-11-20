@@ -63,7 +63,7 @@ export class ClickableStringComponent implements OnInit {
       this.settings.changeRoute({
         title: 'user_outline',
         route: 'app/profile',
-        params: { ...mentionedUser, back: true }
+        params: { id: mentionedUser.id, back: true }
       })
     })
   }

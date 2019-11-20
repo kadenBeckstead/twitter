@@ -12,7 +12,6 @@ import { BottomSheetComponent } from '../../../shared/components'
 export class UserProfileComponent implements OnInit {
 
   user: any;
-  baseUser: any;
   ff;
   posts;
   following: boolean = null;
@@ -31,25 +30,23 @@ export class UserProfileComponent implements OnInit {
   ngOnInit() {
     this.route.queryParams.subscribe(async (a) => {
       this.ff.service.getSingleUser(a.id).subscribe((b) => {
-        this.user = {...b[0], back: true}
-        this.ff.service.getBaseUser().subscribe((baseUser) => {
-          this.baseUser = baseUser[0];
-          this.showButton = this.baseUser.id !== this.user.id;
-          if (this.showButton) {
-            this.ff.service.isAFollower(this.baseUser.id, this.user.id).subscribe((res) => {
-              this.following = res.isAFollower;
-            })
-          }
-        })
+        this.user = { ...b[0] }
+        this.showButton = this.settings.userId !== this.user.id;
+        if (this.showButton) {
+          this.user.back = true;
+          this.ff.service.isAFollower(this.settings.userId, this.user.id).subscribe((res) => {
+            this.following = res.isAFollower;
+          })
+        }
       })
     })
   }
 
   toggleFollow() {
     if (this.following) {
-      this.ff.service.unfollow(this.baseUser.id, this.user.id).subscribe()
+      this.ff.service.unfollow(this.settings.userId, this.user.id).subscribe()
     } else {
-      this.ff.service.makeFollower(this.baseUser.id, this.user.id).subscribe()
+      this.ff.service.makeFollower(this.settings.userId, this.user.id).subscribe()
     }
     this.following = !this.following;
   }

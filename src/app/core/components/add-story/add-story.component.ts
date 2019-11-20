@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FeatureFlagsService } from 'src/app/shared/services';
-import { Browser } from '@capacitor/core';
+import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/services';
 
 
 @Component({
@@ -16,7 +15,8 @@ export class AddStoryComponent implements OnInit {
   ff;
 
   constructor(
-    private ffs: FeatureFlagsService
+    private ffs: FeatureFlagsService,
+    private settings: LocalSettingsService,
   ) {
     this.ff = ffs.ff.feed;
   }
@@ -37,6 +37,11 @@ export class AddStoryComponent implements OnInit {
         attachment = {attachmentType: this.attachmentType, attachmentUrl: this.attachmentUrl}
       }
       this.ff.service.postStatus(userId, this.title, attachment, this.body).subscribe();
+      this.settings.changeRoute({
+        title: 'person_outline',
+        route: 'app/profile',
+        params: {id: this.settings.userId}
+      })
     })
   }
 

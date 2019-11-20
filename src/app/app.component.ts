@@ -56,6 +56,8 @@ export class AppComponent implements OnInit {
         this.settings.setUserId(a.uid);
       }
     })
+
+    this.real.testFunction();
     
   }
 

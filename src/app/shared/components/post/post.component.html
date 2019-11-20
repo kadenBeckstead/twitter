@@ -1,7 +1,7 @@
 <div class="post" [class.viewer]="isViewer" fxLayout="column" fxLayoutAlign="start center">
     <div class="header" fxLayout="row" fxLayoutAlign="start start" (click)="handleClick($event)">
         <span fxLayout="row" fxLayoutAlign="start center">
-            <avatar class="avatar" [size]="'x-small'" [photoUrl]="post.photoUrl"></avatar>
+            <avatar *ngIf="user" class="avatar" [size]="'x-small'" [photoUrl]="user.photoUrl"></avatar>
             <div *ngIf="username" class="username">{{username}}</div>
         </span>
     </div>

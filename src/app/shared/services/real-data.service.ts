@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core';
 import { LambdaConnectorService } from './lambda-connector.service';
-import { User, Attachment, Status } from 'Instagram';
 import * as AWS from 'aws-sdk';
 import * as dynamodb from 'aws-sdk/clients/dynamodb';
 import { LocalSettingsService } from './local-settings.service';
@@ -46,16 +45,12 @@ export class RealDataService {
     );
   }
 
-  getUserPosts(userId: number, lastKey: number = 0, pageSize: number = 5) {
-    return this.lambda.getUserPosts(userId, lastKey, pageSize)
+  getUserPosts(userId: number) {
+    return this.lambda.getUserPosts(userId)
   }
 
   getBaseUser() {
     return this.getSingleUser(this.settings.userId)
-  }
-
-  getNewsFeed(followers: any[], lastKey: number = 0, pageSize: number = 5) {
-    return this.lambda.getNewsFeed(followers, lastKey, pageSize)
   }
 
   makeFollower(followerId: string, followeeId: string) {
@@ -96,8 +91,12 @@ export class RealDataService {
     return this.lambda.getListOfUsers(arr, null, lastKey, pageSize)
   }
 
-  postStatus(userId: string, title: string = null, attachment: Attachment = null, body: string = null) {
+  postStatus(userId: string, title: string = null, attachment: any = null, body: string = null) {
     return this.lambda.postStatus(userId, title, attachment, body);
+  }
+
+  async testFunction() {
+
   }
 
   upsertItem(tablename: string, item: Object) {

@@ -2,6 +2,7 @@ import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, Output 
 import { LambdaConnectorService } from '../../services';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
+import { ActivatedRoute } from '@angular/router';
 
 @Component({
   selector: 'posts-list',
@@ -16,28 +17,45 @@ export class PostsListComponent implements OnInit, AfterViewInit {
   @Input() id = null;
   @Input() pageSize = 4;
   @Input() lastKey = 0;
-  @ViewChild('scrollablePostsList', {static: false}) scrollableEl:ElementRef;
-  
+  @ViewChild('scrollablePostsList', { static: false }) scrollableEl: ElementRef;
+
   allPosts = [];
   theEnd = false;
 
   constructor(
-    private lambda: LambdaConnectorService
+    private lambda: LambdaConnectorService,
+    private route: ActivatedRoute
   ) { }
 
   ngOnInit() {
-    this.lastKey = 0;
-    this.fetch().subscribe((posts: any[]) => {
-      posts.forEach((item) => {
-        this.allPosts.push(item);
+    this.lastKey = null;
+
+    this.route.queryParams.subscribe((queryParams) => {
+      this.id = queryParams.id
+      this.allPosts = [];
+
+      this.fetch().subscribe((posts: any) => {
+        if (!posts.LastEvaluatedKey) {
+          this.theEnd = true;
+        }
+        if (posts.length > 0) {
+          posts.forEach((item) => {
+            this.allPosts.push(item);
+          })
+          this.lastKey = posts.LastEvaluatedKey
+        } else if (posts) {
+          posts.Items.forEach((item) => {
+            this.allPosts.push(item);
+          })
+          this.lastKey = posts.LastEvaluatedKey
+        }
       })
-      this.lastKey += (posts.length - 1);
-    })
+    });
   }
 
   ngAfterViewInit() {
     let source = fromEvent(this.scrollableEl.nativeElement, 'scroll');
-    let ex = source.pipe(debounceTime(150))
+    let ex = source.pipe(debounceTime(300))
 
     ex.subscribe(() => {
       if (this.scrollableEl.nativeElement.scrollHeight - this.scrollableEl.nativeElement.scrollTop === this.scrollableEl.nativeElement.clientHeight) {
@@ -48,25 +66,24 @@ export class PostsListComponent implements OnInit, AfterViewInit {
 
   getBatch() {
     if (!this.theEnd) {
-      this.fetch().subscribe((posts: any[]) => {
-        this.lastKey += posts.length;
-        if (posts.length === 0) {
+      this.fetch().subscribe((posts: any) => {
+        if (!posts.LastEvaluatedKey) {
           this.theEnd = true;
-          console.log('THE END!')
         }
-        posts.forEach((item) => {
+        posts.Items.forEach((item) => {
           this.allPosts.push(item);
         })
+        this.lastKey = posts.LastEvaluatedKey;
       })
     }
   }
 
   fetch() {
     if (this.isNewsFeed) {
-      return this.lambda.getNewsFeed(this.posts, this.lastKey, this.pageSize);
+      return this.lambda.getNewsFeed(this.lastKey);
     }
     if (this.isPosts) {
-      return this.lambda.getUserPosts(this.id, this.lastKey, this.pageSize);
+      return this.lambda.getUserPosts(this.id, this.lastKey);
     }
     if (this.hashtag) {
       return this.lambda.getStatusesByHashtag(this.id, this.lastKey, this.pageSize)

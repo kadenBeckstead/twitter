@@ -12,7 +12,7 @@ export class SearchComponent implements OnInit, AfterViewInit {
   @ViewChild('searchInput', { static: false }) input;
   params;
   searchQuery: string = '';
-  searchResults: Observable<any> | [];
+  searchResults: Observable<any> | any[];
   ff;
 
   constructor(

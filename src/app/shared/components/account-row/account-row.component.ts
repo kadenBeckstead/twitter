@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { FeatureFlagsService } from '../../services';
+import { FeatureFlagsService, LocalSettingsService } from '../../services';
 
 @Component({
   selector: 'account-row',
@@ -10,7 +10,7 @@ import { FeatureFlagsService } from '../../services';
 export class AccountRowComponent implements OnInit {
 
   @Input() handle: string = 'undefined';
-  @Input() id: number;
+  @Input() id: String;
   @Input() name: string = 'undefined';
   @Input() base_user_id: number = null;
   @Input() showButtons: boolean = true;
@@ -19,6 +19,7 @@ export class AccountRowComponent implements OnInit {
   following = null;
 
   constructor(
+    public settings: LocalSettingsService,
     private router: Router,
     private ffs: FeatureFlagsService
   ) {
@@ -27,7 +28,7 @@ export class AccountRowComponent implements OnInit {
 
   ngOnInit() {
     if (this.showButtons) {
-      this.ff.service.isAFollower(this.base_user_id, this.id).subscribe((res) => {
+      this.ff.service.isAFollower(this.settings.userId, this.id).subscribe((res) => {
         this.following = res.isAFollower;
       })
     }
@@ -42,9 +43,9 @@ export class AccountRowComponent implements OnInit {
 
   toggleFollow() {
     if (this.following) {
-      this.ff.service.unfollow(this.base_user_id, this.id).subscribe()
+      this.ff.service.unfollow(this.settings.userId, this.id).subscribe()
     } else {
-      this.ff.service.makeFollower(this.base_user_id, this.id).subscribe()
+      this.ff.service.makeFollower(this.settings.userId, this.id).subscribe()
     }
     this.following = !this.following;
   }

@@ -1,8 +1,5 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { Plugins, CameraResultType } from '@capacitor/core';
-import { FeatureFlagsService, LambdaConnectorService, LocalSettingsService } from 'src/app/shared/services';
-
-const { Camera } = Plugins;
+import { FeatureFlagsService, LocalSettingsService } from 'src/app/shared/services';
 
 @Component({
   selector: 'News-Feed',
@@ -10,7 +7,7 @@ const { Camera } = Plugins;
   styleUrls: ['./news-feed.component.less']
 })
 export class NewsFeedComponent implements OnInit {
-  @Input() params; // TODO: add types
+  @Input() params;
 
   ff;
   posts;
@@ -32,13 +29,12 @@ export class NewsFeedComponent implements OnInit {
     });
   }
 
-  async takePicture() {
-    const image = await Camera.getPhoto({
-      quality: 90,
-      allowEditing: true,
-      resultType: CameraResultType.Uri
-    });
-    let imageUrl = image.webPath;
+  takePicture() {
+    this.settings.changeRoute({
+      title: 'add_outline',
+      route: 'app/add',
+      params: {}
+    })
   }
 
 }
