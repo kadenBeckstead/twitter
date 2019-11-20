@@ -6,7 +6,7 @@
         </span>
     </div>
     <img *ngIf="post.attachmentType === 'photo'" class="attachment" [src]="post.attachmentUrl">
-    <iframe *ngIf="post.attachmentType === 'video'" width="275" height="200" [src]="VideoURL()" frameborder="0"
+    <iframe *ngIf="post.attachmentType === 'video'" width="275" height="200" [src]="this.post.attachmentUrl | safe" frameborder="0"
         allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     <span class="caption" fxLayout="row wrap">
         <clickable-string class="body-content" [string]="post.body"></clickable-string>

@@ -66,9 +66,4 @@ export class PostComponent implements OnInit {
       })
     }
   }
-
-  VideoURL() {
-    return this.sanitizer.bypassSecurityTrustResourceUrl(this.post.attachmentUrl);
-  }
-
 }

@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { LocalSettingsService } from '../../services';
+import { LocalSettingsService, RealDataService } from '../../services';
 import { MatBottomSheetRef } from '@angular/material/bottom-sheet';
 
 @Component({
@@ -14,6 +14,7 @@ export class BottomSheetComponent implements OnInit {
   constructor(
     public settings: LocalSettingsService,
     public bottomSheetRef: MatBottomSheetRef,
+    private real: RealDataService,
   ) { }
 
   ngOnInit() {}
@@ -25,7 +26,10 @@ export class BottomSheetComponent implements OnInit {
 
   handleFileInput(files: FileList) {
     this.fileToUpload = files.item(0);
-    this.settings.updateProfilePic(this.fileToUpload);
+    this.real.getSingleUser(this.settings.userId).subscribe((a) => {
+      let handle = a[0].handle
+      this.settings.updateProfilePic(handle, this.fileToUpload);
+    })
   }
 
 }

@@ -95,9 +95,6 @@ export class RealDataService {
     return this.lambda.postStatus(userId, title, attachment, body);
   }
 
-  async testFunction() {
-
-  }
 
   upsertItem(tablename: string, item: Object) {
     let uploadable = AWS.DynamoDB.Converter.marshall(item)

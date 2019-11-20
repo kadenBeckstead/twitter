@@ -114,7 +114,7 @@ export class LoginComponent implements OnInit {
 
   async handleFileInput(files: FileList) {
       let fileToUpload = files.item(0);
-      this.settings.updateProfilePic(fileToUpload).subscribe((val) => {
+      this.settings.updateProfilePic(this.newAccountForm.value.newHandle, fileToUpload).subscribe((val) => {
         val && (this.photoUrl = val)
       })
   }

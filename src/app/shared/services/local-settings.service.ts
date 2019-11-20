@@ -4,6 +4,7 @@ import { Router } from '@angular/router';
 import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
 import { BehaviorSubject } from 'rxjs';
+import { DynamoDB } from 'aws-sdk';
 
 
 @Injectable({
@@ -48,7 +49,7 @@ export class LocalSettingsService {
     this.router.navigate(['login'])
   }
 
-  updateProfilePic(file: any) {
+  updateProfilePic(handle: string, file: any) {
     const contentType = file.type;
     const bucket = new S3(
       {
@@ -64,13 +65,28 @@ export class LocalSettingsService {
       ACL: 'public-read',
       ContentType: contentType
     };
-    bucket.upload(params, (err, data) => {
+    bucket.upload(params, async (err, data) => {
       if (err) {
         console.log('There was an error uploading your file: ', err);
         return false;
       }
       this.uploadLocation.next(data.Location);
-      return true;
+      let params = {
+        TableName: 'user',
+        Key:{
+            "handle": {S: handle},
+        },
+        UpdateExpression: "set photoUrl = :r",
+        ExpressionAttributeValues: {
+            ":r": {S: data.Location},
+        },
+      }
+  
+      let res = await new DynamoDB({
+          accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
+          secretAccessKey: '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',
+          region: 'us-east-1'
+        }).updateItem(params).promise()
     });
     return this.uploadLocation;
   }

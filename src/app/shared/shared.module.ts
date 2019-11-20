@@ -64,6 +64,7 @@ import {
 
 import { 
 	EscapeHtmlPipe,
+	SafeResourcePipe,
  } from './pipes';
 
 // import { } from './directives';
@@ -87,7 +88,8 @@ const modals = [
 ];
 
 const pipes = [
-	EscapeHtmlPipe
+	EscapeHtmlPipe,
+	SafeResourcePipe,
 ];
 
 const services = [
