@@ -22,16 +22,12 @@ export class ClickableStringComponent implements OnInit {
     this.string.split(' ').forEach((w) => {
       let newString = '';
       if (w.startsWith('#')) {
-        let startIndex = this.string.match(w).index;
-        let endIndex = startIndex + w.length;
         this.formattedString.push({
           word: w,
           clickable: true,
           clickFn: (word) => {this.hashtag(word)}
         });
       } else if (w.startsWith('@')) {
-        let startIndex = this.string.match(w).index;
-        let endIndex = startIndex + w.length;
         this.formattedString.push({
           word: w,
           clickable: true,
@@ -52,7 +48,7 @@ export class ClickableStringComponent implements OnInit {
     this.settings.changeRoute({
       title: null,
       route: 'app/hashtag-match',
-      params: {hash: hashtag}
+      params: { hash: hashtag }
     })
   }
 

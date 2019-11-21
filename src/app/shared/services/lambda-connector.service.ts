@@ -13,12 +13,12 @@ export class LambdaConnectorService {
 
   constructor(private http: HttpClient, private settings: LocalSettingsService) { }
 
-  makeFollower(followerId: string, followeeId: string) { // DONE
+  makeFollower(followerId: string, followeeId: string) {
     let opts = {followerId, followeeId}
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/follow`, opts);
   }
 
-  unfollow(followerId: string, followeeId: string) { // DONE
+  unfollow(followerId: string, followeeId: string) {
     let opts = {followerId, followeeId, unfollow: true}
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/follow`, opts);
   }
@@ -34,27 +34,27 @@ export class LambdaConnectorService {
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/users`, opts);
   }
 
-  getUserPosts(userId: number, ExclusiveStartKey?: Object) { // DONE (needs pagination though)
+  getUserPosts(userId: number, ExclusiveStartKey?: Object) {
     let opts = {userId, Limit: this.pageSizeLimit};
     ExclusiveStartKey && (opts['ExclusiveStartKey'] = ExclusiveStartKey)
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/getStatus`, opts);
   }
 
-  filterUsers(query) { // DONE
+  filterUsers(query) {
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/filter`, {query});
   }
 
-  isAFollower(followerQuery) { // DONE
-    // followerQuery: { followeeId: 1, followerId: 2 }
+  isAFollower(followerQuery) {
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/follower`, followerQuery);
   }
 
-  getStatusesByHashtag(hashtag: string, lastKey: number = 0, pageSize: number = 5) { //DONE (needs pagination though)
-    let opts = {hashtag, lastKey, pageSize}
+  getStatusesByHashtag(hashtag: string, ExclusiveStartKey?: Object) {
+    let opts = {hashtag, Limit: this.pageSizeLimit}
+    ExclusiveStartKey && (opts['ExclusiveStartKey'] = ExclusiveStartKey)
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/getStatusesByHashtag`, opts);
   }
 
-  postStatus(userId: string, title: string = null, attachment: Attachment = null, body: string = null) { // DONE
+  postStatus(userId: string, title: string = null, attachment: Attachment = null, body: string = null) {
     let opts = {userId, title, attachment, body}
     return this.http.post(`https://6lvnrvg3i6.execute-api.us-west-1.amazonaws.com/dev/status`, opts);
   }

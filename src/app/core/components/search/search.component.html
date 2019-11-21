@@ -11,7 +11,7 @@
     <div class="content">
         <div class="results" *ngIf="searchResults">
             <span *ngFor="let user of searchResults">
-                <account-row *ngIf="user?.id" [showButtons]="false" [id]="user.id" [handle]="user.handle" [name]="user.username"></account-row>
+                <account-row *ngIf="user?.id" [showButtons]="false" [photoUrl]="user.photoUrl" [id]="user.id" [handle]="user.handle" [name]="user.username"></account-row>
             </span>
         </div>
     </div>

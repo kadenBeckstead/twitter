@@ -3,6 +3,7 @@ import { LambdaConnectorService } from './lambda-connector.service';
 import * as AWS from 'aws-sdk';
 import * as dynamodb from 'aws-sdk/clients/dynamodb';
 import { LocalSettingsService } from './local-settings.service';
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -36,13 +37,7 @@ export class RealDataService {
     private lambda: LambdaConnectorService,
     private settings: LocalSettingsService
   ) {
-    this.db = new dynamodb(
-      {
-        accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
-        secretAccessKey: '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',
-        region: 'us-east-1'
-      }
-    );
+    this.db = new dynamodb(environment.awsParams);
   }
 
   getUserPosts(userId: number) {
@@ -76,7 +71,7 @@ export class RealDataService {
   }
 
   getStatusesByHashtag(hashtag: string, lastKey: number = 0, pageSize: number = 5) {
-    return this.lambda.getStatusesByHashtag(hashtag, lastKey, pageSize);
+    return this.lambda.getStatusesByHashtag(hashtag, lastKey);
   }
 
   isAFollower(followerId: number, followeeId: number) {
@@ -94,7 +89,6 @@ export class RealDataService {
   postStatus(userId: string, title: string = null, attachment: any = null, body: string = null) {
     return this.lambda.postStatus(userId, title, attachment, body);
   }
-
 
   upsertItem(tablename: string, item: Object) {
     let uploadable = AWS.DynamoDB.Converter.marshall(item)

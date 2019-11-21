@@ -15,6 +15,12 @@ export const environment = {
     messagingSenderId: "1034349972184",
     appId: "1:1034349972184:web:0c913c2d28a0f10c0765ad",
     measurementId: "G-9R0G039JPT"
+  },
+
+  awsParams: {
+    accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
+    secretAccessKey: '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',
+    region: 'us-east-1'
   }
 
 };

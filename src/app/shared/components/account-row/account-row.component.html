@@ -1,6 +1,6 @@
 <div class="row" fxLayout="row" fxLayoutAlign="start center">
     <div class="left-side" (click)="openUserProfile()" fxLayoutAlign="start center">
-        <avatar size="small"></avatar>
+        <avatar size="small" [photoUrl]="photoUrl"></avatar>
         <div class="name-row" fxLayout="column">
             <div class="handle">{{handle}}</div>
             <div class="user-name">{{name}}</div>

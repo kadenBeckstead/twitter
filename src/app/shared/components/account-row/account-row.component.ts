@@ -12,6 +12,7 @@ export class AccountRowComponent implements OnInit {
   @Input() handle: string = 'undefined';
   @Input() id: String;
   @Input() name: string = 'undefined';
+  @Input() photoUrl: string;
   @Input() base_user_id: number = null;
   @Input() showButtons: boolean = true;
 

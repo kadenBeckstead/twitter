@@ -6,7 +6,7 @@
 
             <mat-tab [label]="(currentProfile.followers?.length ? currentProfile.followers.length : 0) + ' Followers'">
                 <div #scrollableFollowers style="height: 100%; overflow: auto;">
-                    <account-row [handle]="user?.handle" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
+                    <account-row [handle]="user?.handle" [photoUrl]="user?.photoUrl" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
                         *ngFor="let user of relevantFollowers">
                     </account-row>
                 </div>
@@ -15,7 +15,7 @@
 
             <mat-tab [label]="(currentProfile.following?.length ? currentProfile.following.length : 0) + ' Following'">
                 <div #scrollableFollowing style="height: 100%; overflow: auto;">
-                    <account-row [handle]="user?.handle" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
+                    <account-row [handle]="user?.handle" [photoUrl]="user?.photoUrl" [base_user_id]="currentProfile.id" [id]="user?.id" [name]="user?.username"
                         *ngFor="let user of relevantFollowing">
                     </account-row>
                 </div>

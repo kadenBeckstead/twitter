@@ -5,7 +5,7 @@ import * as AWS from 'aws-sdk/global';
 import * as S3 from 'aws-sdk/clients/s3';
 import { BehaviorSubject } from 'rxjs';
 import { DynamoDB } from 'aws-sdk';
-
+import { environment } from '../../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -51,13 +51,8 @@ export class LocalSettingsService {
 
   updateProfilePic(handle: string, file: any) {
     const contentType = file.type;
-    const bucket = new S3(
-      {
-        accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
-        secretAccessKey: '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',
-        region: 'us-east-1'
-      }
-    );
+    
+    const bucket = new S3(environment.awsParams);
     const params = {
       Bucket: 'instagram-user-profile-pictures',
       Key: file.name,
@@ -82,11 +77,7 @@ export class LocalSettingsService {
         },
       }
   
-      let res = await new DynamoDB({
-          accessKeyId: 'AKIAITK3XUD5XWREYGOQ',
-          secretAccessKey: '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',
-          region: 'us-east-1'
-        }).updateItem(params).promise()
+      await new DynamoDB(environment.awsParams).updateItem(params).promise()
     });
     return this.uploadLocation;
   }

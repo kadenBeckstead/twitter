@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef, Output } from '@angular/core';
+import { Component, OnInit, Input, AfterViewInit, ViewChild, ElementRef } from '@angular/core';
 import { LambdaConnectorService } from '../../services';
 import { fromEvent } from 'rxjs';
 import { debounceTime } from 'rxjs/operators';
@@ -31,7 +31,7 @@ export class PostsListComponent implements OnInit, AfterViewInit {
     this.lastKey = null;
 
     this.route.queryParams.subscribe((queryParams) => {
-      this.id = queryParams.id
+      this.hashtag ? (this.id = queryParams.hash) : (this.id = queryParams.id)
       this.allPosts = [];
 
       this.fetch().subscribe((posts: any) => {
@@ -44,9 +44,9 @@ export class PostsListComponent implements OnInit, AfterViewInit {
           })
           this.lastKey = posts.LastEvaluatedKey
         } else if (posts) {
-          posts.Items.forEach((item) => {
+          posts.Items && (posts.Items.forEach((item) => {
             this.allPosts.push(item);
-          })
+          }))
           this.lastKey = posts.LastEvaluatedKey
         }
       })
@@ -86,9 +86,8 @@ export class PostsListComponent implements OnInit, AfterViewInit {
       return this.lambda.getUserPosts(this.id, this.lastKey);
     }
     if (this.hashtag) {
-      return this.lambda.getStatusesByHashtag(this.id, this.lastKey, this.pageSize)
+      return this.lambda.getStatusesByHashtag(this.id, this.lastKey)
     }
   }
-
 
 }
